@@ -1,35 +1,23 @@
 # Les branches avec Git #
 
-Quasiment tous les VCS ont une forme ou une autre de gestion de branche.
-Créer une branche signifie diverger de la ligne principale de développement et continuer à travailler sans se préoccuper de cette ligne principale.
-Dans de nombreux outils de gestion de version, cette fonctionnalité est souvent chère en ressources et nécessite de créer une nouvelle copie du répertoire de travail, ce qui peut prendre longtemps dans le cas de gros projets.
+Quasiment tous les VCS ont une forme ou une autre de gestion de branche. Créer une branche signifie diverger de la ligne principale de développement et continuer à travailler sans se préoccuper de cette ligne principale. Dans de nombreux outils de gestion de version, cette fonctionnalité est souvent chère en ressources et nécessite de créer une nouvelle copie du répertoire de travail, ce qui peut prendre longtemps dans le cas de gros projets.
 
-De nombreuses personnes font référence au modèle de gestion de branche de Git comme LA fonctionnalité et c'est sûrement la spécificité de Git par rapport à la communauté des gestionnaires de version.
-Pourquoi est-elle si spéciale ?
-La méthode de Git pour gérer les branches est particulièrement légère, permettant de réaliser des embranchements quasi instantanément et de basculer entre les branches généralement aussi rapidement.
-À la différence de nombreux autres gestionnaires de version, Git encourage à travailler avec des méthodes qui privilégient la création et la fusion de branches, jusqu'à plusieurs fois par jour.
-Bien comprendre et maîtriser cette fonctionnalité est un atout pour faire de Git un outil unique qui peut littéralement changer la manière de développer.
+De nombreuses personnes font référence au modèle de gestion de branche de Git comme LA fonctionnalité et c'est sûrement la spécificité de Git par rapport à la communauté des gestionnaires de version. Pourquoi est-elle si spéciale ? La méthode de Git pour gérer les branches est particulièrement légère, permettant de réaliser des embranchements quasi instantanément et de basculer entre les branches généralement aussi rapidement. À la différence de nombreux autres gestionnaires de version, Git encourage à travailler avec des méthodes qui privilégient la création et la fusion de branches, jusqu'à plusieurs fois par jour. Bien comprendre et maîtriser cette fonctionnalité est un atout pour faire de Git un outil unique qui peut littéralement changer la manière de développer.
 
 ## Ce qu'est une branche ##
 
-Pour réellement comprendre comment Git gère les branches, nous devons revenir en arrière et examiner de plus près comment Git stocke ses données.
-Comme vous pouvez vous en souvenir du chapitre 1, Git ne stocke pas ses données comme une série d'ensembles de modifications ou différences, mais comme une série d'instantanés.
+Pour réellement comprendre comment Git gère les branches, nous devons revenir en arrière et examiner de plus près comment Git stocke ses données. Comme vous pouvez vous en souvenir du chapitre 1, Git ne stocke pas ses données comme une série d'ensembles de modifications ou différences, mais comme une série d'instantanés.
 
-Lorsqu'on valide dans Git, Git stocke un objet *commit* qui contient un pointeur vers l'instantané du contenu qui a été indexé, les méta-données d'auteur et de message et zéro ou plusieurs pointeurs vers le ou les *commits* qui sont les parents directs de ce *commit* :
-zéro parent pour la première validation, un parent pour un *commit* normal et des parents multiples pour des *commits* qui sont le résultat de la fusion d'une ou plusieurs branches.
+Lorsqu'on valide dans Git, Git stocke un objet *commit* qui contient un pointeur vers l'instantané du contenu qui a été indexé, les méta-données d'auteur et de message et zéro ou plusieurs pointeurs vers le ou les *commits* qui sont les parents directs de ce *commit* : zéro parent pour la première validation, un parent pour un *commit* normal et des parents multiples pour des *commits* qui sont le résultat de la fusion d'une ou plusieurs branches.
 
-Pour visualiser ce concept, supposons un répertoire contenant trois fichiers, ces trois fichiers étant indexés puis validés.
-Indexer les fichiers signifie calculer la somme de contrôle pour chacun (la fonction de hachage SHA-1 mentionnée au chapitre 1), stocker cette version du fichier dans le dépôt Git (Git les nomme blobs) et ajouter la somme de contrôle à la zone d'index :
+Pour visualiser ce concept, supposons un répertoire contenant trois fichiers, ces trois fichiers étant indexés puis validés. Indexer les fichiers signifie calculer la somme de contrôle pour chacun (la fonction de hachage SHA-1 mentionnée au chapitre 1), stocker cette version du fichier dans le dépôt Git (Git les nomme blobs) et ajouter la somme de contrôle à la zone d'index :
 
 	$ git add LISEZMOI test.rb LICENCE
 	$ git commit -m 'commit initial de mon projet'
 
-Lorsque vous créez le *commit* en lançant la commande `git commit`, Git calcule la somme de contrôle de chaque répertoire (ici, seulement pour le répertoire racine) et stocke ces objets arbres dans le dépôt Git.
-Git crée alors un objet *commit* qui contient les méta-données et un pointeur vers l'arbre projet d'origine de manière à pouvoir recréer l'instantané si besoin.
+Lorsque vous créez le *commit* en lançant la commande `git commit`, Git calcule la somme de contrôle de chaque répertoire (ici, seulement pour le répertoire racine) et stocke ces objets arbres dans le dépôt Git. Git crée alors un objet *commit* qui contient les méta-données et un pointeur vers l'arbre projet d'origine de manière à pouvoir recréer l'instantané si besoin.
 
-Votre dépôt Git contient à présent cinq objets :
-un blob pour le contenu de chacun des trois fichiers, un arbre qui liste le contenu du répertoire et spécifie quels noms de fichiers sont attachés à quels blobs et un objet *commit* avec le pointeur vers l'arbre d'origine et toutes les méta-données attachées au *commit*.
-Conceptuellement, les données contenues dans votre dépôt Git ressemblent à la figure 3-1.
+Votre dépôt Git contient à présent cinq objets : un blob pour le contenu de chacun des trois fichiers, un arbre qui liste le contenu du répertoire et spécifie quels noms de fichiers sont attachés à quels blobs et un objet *commit* avec le pointeur vers l'arbre d'origine et toutes les méta-données attachées au *commit*. Conceptuellement, les données contenues dans votre dépôt Git ressemblent à la figure 3-1.
 
 Insert 18333fig0301.png
 Figure 3-1. Données d'un *commit* unique.
