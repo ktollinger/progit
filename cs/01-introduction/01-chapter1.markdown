@@ -161,7 +161,7 @@ V distribuci založené na Debianu (jako je například Ubuntu) zkuste použít 
 
 ### Instalace v systému Mac ###
 
-Existují dva jednoduché způsoby, jak nainstalovat Git v systému Mac. Tím nejjednodušším je použít grafický instalátor Git, který si můžete stáhnout ze stránky SourceForge (viz obrázek 1-7):
+Existují tři jednoduché způsoby, jak nainstalovat Git v systému Mac. Tím nejjednodušším je použít grafický instalátor Git, který si můžete stáhnout ze stránky SourceForge (viz obrázek 1-7):
 
 	http://sourceforge.net/projects/git-osx-installer/
 
@@ -173,6 +173,10 @@ Jiným obvyklým způsobem je instalace systému Git prostřednictvím systému 
 	$ sudo port install git +svn +doc +bash_completion +gitweb
 
 Není nutné přidávat všechny doplňky, ale pokud budete někdy používat Git s repozitáři systému Subversion, budete pravděpodobně chtít nainstalovat i doplněk +svn (viz kapitola 8).
+
+Dalším možným nástrojem pro instalaci Git je Homebrew (`http://brew.sh/`). Pokud máte Homebrew nainstalován, pak nainstalujete Git příkazem
+
+	$ brew install git
 
 ### Instalace v systému Windows ###
 
