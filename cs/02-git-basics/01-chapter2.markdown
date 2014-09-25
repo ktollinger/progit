@@ -1176,8 +1176,11 @@ Pokud zadáte – stejně jako v našem příkladu nahoře – `git co` a dvakr�
 
 Automatické dokončování pravděpodobně více využijete v případě parametrů. Pokud například zadáváte příkaz `git log` a nemůžete si vzpomenout na některý z parametrů, můžete zadat jeho začátek, stisknout klávesu Tab a podívat se, co by to mohlo přesně být:
 
-	$ git log --s<tab>
-	--shortstat  --since=  --src-prefix=  --stat   --summary
+	$ git log --s<tab><tab>
+	--shortstat               --sparse
+	--simplify-by-decoration  --src-prefix=
+	--simplify-merges         --stat
+	--since=                  --summary
 
 Jedná se o užitečný trik, který vám může ušetřit čas a pročítání dokumentace.
 

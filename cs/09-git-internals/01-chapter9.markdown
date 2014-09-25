@@ -331,6 +331,12 @@ Obrázek 9-4. Objekty v adresáři Git s referencemi větve „head“
 
 Spouštíte-li příkaz typu `git branch (název větve)`, Git ve skutečnosti spustí příkaz `update-ref` a vloží hodnotu SHA-1 poslední revize větve, na níž se nacházíte, do nové reference, kterou chcete vytvořit.
 
+Pokud se reference nenajde v adresáři `refs`, hledá ji Git v souboru `.git/packed-refs`. Ten obsahuje páry SHA-1 a cesta oddělené mezerou jako například:
+
+    52d771167707552d8e2a50f602c669e2ad135722 refs/tags/v1.0.1
+
+Důvodem k existenci tohoto souboru je výkonnost. Pro reference, které se často nemění je mnohem efektivnější udržovat jeden soubor než mnoho malých. K zabalení referencí do tohoto souboru můžeme Git vyzvat příkazem `git pack-refs`.
+
 ### Soubor HEAD ###
 
 Nyní se však nabízí otázka, jak může Git při spuštění příkazu `git branch (název větve)` znát hodnotu SHA-1 poslední revize. Odpověď zní: soubor HEAD. Soubor HEAD je symbolická reference na větev, na níž se právě nacházíte. Symbolickou referencí myslím to, že na rozdíl od normálních referencí většinou neobsahuje hodnotu SHA-1, ale spíš ukazatel na jinou referenci. Pokud se na soubor podíváte, můžete v něm najít třeba následující:
