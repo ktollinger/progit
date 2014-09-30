@@ -1186,7 +1186,7 @@ Jedná se o užitečný trik, který vám může ušetřit čas a pročítání 
 
 ### Aliasy Git ###
 
-Jestliže zadáte systému Git neúplný příkaz, systém ho neakceptuje. Pokud nechcete zadávat celý text příkazů Git, můžete pomocí `git config` jednoduše nastavit pro každý příkaz tzv. alias. Uveďme několik příkladů možného nastavení:
+Jestliže zadáte systému Git neúplný příkaz, systém si ho nedoplní. Pokud nechcete zadávat celý text příkazů Git, můžete pomocí `git config` jednoduše nastavit pro každý příkaz tzv. alias. Uveďme několik příkladů možného nastavení:
 
 	$ git config --global alias.co checkout
 	$ git config --global alias.br branch
@@ -1195,7 +1195,7 @@ Jestliže zadáte systému Git neúplný příkaz, systém ho neakceptuje. Pokud
 
 To znamená, že například místo kompletního příkazu `git commit` stačí zadat pouze zkrácené `git ci`. Budete-li pracovat v systému Git častěji, pravděpodobně budete hojně využívat i jiné příkazy. V takovém případě neváhejte a vytvořte si nové aliasy.
 
-Tato metoda může být velmi užitečná také k vytváření příkazů, které by podle vás měly existovat. Pokud jste například narazili na problém s používáním příkazu pro vrácení souboru z oblasti připravených změn, můžete ho vyřešit zadáním vlastního aliasu:
+Tato metoda může být velmi užitečná také k vytváření příkazů, které by podle vás měly existovat. Pokud jste například narazili na problém s používáním příkazu pro vrácení souboru z oblasti připravených změn, můžete ho vyřešit přidáním vlastního aliasu:
 
 	$ git config --global alias.unstage 'reset HEAD --'
 
