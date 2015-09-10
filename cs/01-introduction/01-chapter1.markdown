@@ -129,7 +129,7 @@ Pokud je to možné, je nejvhodnější instalovat Git ze zdrojových souborů. 
 Před instalací samotného Gitu musí váš systém obsahovat následující knihovny, na nichž je Git závislý: curl, zlib, openssl, expat, a libiconv. Pokud používáte systém s nástrojem yum (například u distribuce Fedora) nebo apt-get (například distribuce odvozené od Debianu), můžete k instalaci použít jeden z následujících příkazů:
 
 	$ yum install curl-devel expat-devel gettext-devel \
-	  openssl-devel zlib-devel
+	  openssl-devel zlib-devel perl-devel asciidoc xmlto
 
 	$ apt-get install libcurl4-gnutls-dev libexpat1-dev gettext \
 	  libz-dev libssl-dev
