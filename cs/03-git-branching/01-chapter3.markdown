@@ -86,6 +86,16 @@ Nyní se historie vašeho projektu rozdělila (viz obrázek 3-9). Vytvořili jst
 Insert 18333fig0309.png
 Obrázek 3-9. Historie větví se rozdělila.
 
+Můžeme se na to podívat blíže příkazem `git log`. Spustíte-li `git log --oneline --decorate --graph --all` získáte informaci o historii vašich revizí včetně ukazatelů na jednotlivé větve a o tom jak se měnila jejich historie.
+
+	$ git log --oneline --decorate --graph --all
+	* c2b9e (HEAD, master) made other changes
+	| * 87ab2 (testing) made a change
+	|/
+	* f30ab add feature #32 - ability to add new formats to the
+	* 34ac2 fixed bug #1328 - stack overflow under certain conditions
+	* 98ca9 initial commit of my project
+
 Vzhledem k tomu, že větev v systému Git tvoří jeden jednoduchý soubor, obsahující 40 znaků kontrolního součtu SHA-1 revize, na niž ukazuje, je snadné větve vytvářet i odstraňovat. Vytvořit novou větev je právě tak snadné a rychlé jako zapsat 41 bytů do souboru (40 znaků a jeden znak pro nový řádek).
 
 Tato metoda se výrazně liší od způsobu, jakým probíhá větvení v ostatních nástrojích VCS, kde je nutné zkopírovat všechny soubory projektu do jiného adresáře. To může zabrat – podle velikosti projektu – několik sekund i minut, zatímco v systému Git probíhá tento proces vždy okamžitě. A protože při zapisování revize zaznamenáváme její rodiče, probíhá vyhledávání příslušné základny pro sloučení automaticky a je většinou velmi snadné. Tyto funkce slouží k tomu, aby se vývojáři nebáli vytvářet a používat nové větve.
