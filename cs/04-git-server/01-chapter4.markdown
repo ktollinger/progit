@@ -138,7 +138,7 @@ V tomto okamžiku mohou všichni ostatní, kdo mají SSH přístup k tomuto serv
 
 	$ git clone user@git.example.com:/opt/git/my_project.git
 
-Pokud se uživatel dostane přes SSH na server a má oprávnění k zápisu do adresáře `/opt/git/my_project.git`, má automaticky také oprávnění k odesílání dat. Zadáte-li příkaz `git init` s parametrem `--shared`, Git automaticky nastaví příslušná oprávnění skupiny k zápisu.
+Pokud se uživatel dostane přes SSH na server a má oprávnění k zápisu do adresáře `/opt/git/my_project.git`, má automaticky také oprávnění k odesílání dat.  Zadáte-li příkaz `git init` s parametrem `--shared`, Git automaticky nastaví příslušná oprávnění skupiny k zápisu.
 
 	$ ssh user@git.example.com
 	$ cd /opt/git/my_project.git
@@ -298,7 +298,7 @@ Jaká je funkce zásuvného modulu `post-update`? V principu vypadá asi takto:
 	#
 	# To enable this hook, rename this file to "post-update".
 	#
-
+	
 	exec git-update-server-info
 
 Znamená to, že až budete odesílat data na server prostřednictvím SSH, Git spustí tento příkaz a aktualizuje soubory vyžadované pro přístup přes HTTP.
@@ -419,7 +419,7 @@ Teď to můžete rozjet. Pokud jste nastavení provedli správně, můžete vyzk
 
 To znamená, že vás Gitosis sice rozpoznal, ale nedovolí vám přístup, protože se nepokoušíte zadat žádný příkaz Git. Provedeme tedy skutečný příkaz systému Git a naklonujeme řídicí repozitář Gitosis:
 
-	# on your local computer
+	# na vašem lokálním počítači
 	$ git clone git@gitserver:gitosis-admin.git
 
 Nyní máte adresář s názvem `gitosis-admin`, sestávající ze dvou hlavních částí:
@@ -499,7 +499,7 @@ Gitosis nabízí také jednoduchou správu přístupu. Pokud chcete, aby měl Jo
 	members = john
 	readonly = iphone_project
 
-John nyní může naklonovat projekt a stahovat jeho aktualizace, ale Gitosis mu neumožní, aby odesílal data zpět do projektu. Takových skupin můžete vytvořit libovolně mnoho. Každá může obsahovat různé uživatele a projekty. Jako jednoho ze členů skupiny můžete zadat také celou jinou skupinu (použijete pro ni předponu `@`). Všichni její členové se tím automaticky zdědí.
+John nyní může naklonovat projekt a stahovat jeho aktualizace, ale Gitosis mu neumožní, aby odesílal data zpět do projektu. Takových skupin můžete vytvořit libovolně mnoho. Každá může obsahovat různé uživatele a projekty. Jako jednoho ze členů skupiny můžete zadat také celou jinou skupinu (použijete pro ni předponu `@`). Všichni její členové se tím automaticky zdědí:
 
 	[group mobile_committers]
 	members = scott josie jessica
@@ -516,22 +516,22 @@ Máte-li jakékoli problémy, může vám pomoci zadání `loglevel=DEBUG` do č
 
 ## Gitolite ##
 
-Tato podkapitola slouží k rychlému seznámení s Gitolite a uvádí základní pokyny pro instalaci a nastavení. Nemůže ale nahradit ohromný objem [dokumentace][gltoc], která se s Gitolite dodává. Tato podkapitola se může občas změnit, takže se možná chcete podívat na její [poslední verzi][gldpg].
+Tato podkapitola slouží k rychlému seznámení s Gitolite a uvádí základní pokyny pro instalaci a nastavení.  Nemůže ale nahradit ohromný objem [dokumentace][gltoc], která se s Gitolite dodává.  Tato podkapitola se může občas změnit, takže se možná chcete podívat na její [poslední verzi][gldpg].
 
 [gldpg]: http://sitaramc.github.com/gitolite/progit.html
 [gltoc]: http://sitaramc.github.com/gitolite/master-toc.html
 
-Gitolite je autorizační vrstva nad gitem, která při autentizaci spoléhá na `sshd` nebo `httpd`. (Připomeňme si: autentizace spočívá v rozpoznání uživatele, autorizací rozumíme rozhodování, zda má povolení k provádění toho, co se provést pokouší.)
+Gitolite je autorizační vrstva nad gitem, která při autentizaci spoléhá na `sshd` nebo `httpd`.  (Připomeňme si: autentizace spočívá v rozpoznání uživatele, autorizací rozumíme rozhodování, zda má povolení k provádění toho, co se provést pokouší.)
 
-Gitolite umožňuje nastavit přístupová práva nejen na repozitáře (podobně jako Gitosis), ale také na větve a značky v každém repozitáři. To znamená, že lze nastavit, aby určití lidé mohli odesílat jen do určité větve (nebo určité značky; obecně „refs“), ale do jiné ne.
+Gitolite umožňuje nastavit přístupová práva nejen na repozitáře (podobně jako Gitosis), ale také na větve a značky v každém repozitáři.  To znamená, že lze nastavit, aby určití lidé mohli odesílat jen do určité větve (nebo určité značky; obecně „refs“), ale do jiné ne.
 
 ### Instalace ###
 
-Instalace Gitolite je velmi jednoduchá a to i když si nepřečtete obsáhlou dokumentaci, která je k dispozici. Budete potřebovat účet na nějakém unixovém serveru. Pokud už jsou nainstalovány nástroje Git, Perl a SSH server kompatibilní s OpenSSH, nebudete potřebovat ani přístup root. V příkladech uvedených níže budeme používat účet `git` na serveru `gitserver`.
+Instalace Gitolite je velmi jednoduchá a to i když si nepřečtete obsáhlou dokumentaci, která je k dispozici.  Budete potřebovat účet na nějakém unixovém serveru.  Pokud už jsou nainstalovány nástroje Git, Perl a SSH server kompatibilní s OpenSSH, nebudete potřebovat ani přístup root.  V příkladech uvedených níže budeme používat účet `git` na serveru `gitserver`.
 
-Nástroj Gitolite je ve smyslu „serverového“ softwaru poněkud neobvyklý. Přístup se realizuje přes SSH, takže každá serverová userid je potenciálně „hostitelem gitolite“ (gitolite host). Teď si popíšeme nejjednodušší způsob instalace. V dokumentaci naleznete další metody.
+Nástroj Gitolite je ve smyslu „serverového“ softwaru poněkud neobvyklý. Přístup se realizuje přes SSH, takže každá serverová userid je potenciálně „hostitelem gitolite“ (gitolite host).  Teď si popíšeme nejjednodušší způsob instalace. V dokumentaci naleznete další metody.
 
-Začněte tím, že na serveru vytvoříte uživatele nazvaného `git` a přihlásíte se na něj. Z vaší pracovní stanice nakopírujte svůj veřejný SSH klíč (pokud jste spustili `ssh-keygen` s implicitními hodnotami, jde o soubor `~/.ssh/id_rsa.pub`) a přejmenujte jej na `<vasejmeno>.pub` (v příkladech budeme používat `scott.pub`). Potom proveďte následující příkazy:
+Začněte tím, že na serveru vytvoříte uživatele nazvaného `git` a přihlásíte se na něj.  Z vaší pracovní stanice nakopírujte svůj veřejný SSH klíč (pokud jste spustili `ssh-keygen` s implicitními hodnotami, jde o soubor `~/.ssh/id_rsa.pub`) a přejmenujte jej na `<vasejmeno>.pub` (v příkladech budeme používat `scott.pub`).  Potom proveďte následující příkazy:
 
 	$ git clone git://github.com/sitaramc/gitolite
 	$ gitolite/install -ln
@@ -540,11 +540,11 @@ Začněte tím, že na serveru vytvoříte uživatele nazvaného `git` a přihl�
 
 Poslední příkaz vytvoří na serveru nový gitovský repozitář nazvaný `gitolite-admin`.
 
-Nakonec přejděte zpět na pracovní stanici a spusťte `git clone git@gitserver:gitolite-admin`. To je všechno! Nyní máte Gitolite nainstalovaný na serveru a v domácím adresáři vaší pracovní stanice máte také úplně nový repozitář `gitolite-admin`. Své nastavení Gitolite spravujete pomocí provádění změn v tomto repozitáři jejich odesíláním (push).
+Nakonec přejděte zpět na pracovní stanici a spusťte `git clone git@gitserver:gitolite-admin`. To je všechno!  Nyní máte Gitolite nainstalovaný na serveru a v domácím adresáři vaší pracovní stanice máte také úplně nový repozitář `gitolite-admin`.  Své nastavení Gitolite spravujete pomocí provádění změn v tomto repozitáři jejich odesíláním (push).
 
 ### Přizpůsobení instalace ###
 
-Základní rychlá metoda instalace bude většině lidí vyhovovoat. V případě potřeby existují další možnosti přizpůsobení. Něco můžete změnit jednoduše editací rc souboru. Pokud to ale nestačí, naleznete víc v dokumentaci věnované přizpůsobení Gitolite.
+Základní rychlá metoda instalace bude většině lidí vyhovovat. V případě potřeby existují další možnosti přizpůsobení.  Něco můžete změnit jednoduše editací rc souboru. Pokud to ale nestačí, naleznete víc v dokumentaci věnované přizpůsobení Gitolite.
 
 ### Konfigurační soubor a pravidla přístupu ###
 
@@ -566,11 +566,11 @@ Jakmile je instalace dokončena, přepněte se do repozitáře `gitolite-admin`,
 
 Všimněte si, že „scott“ (jméno veřejného klíče v dříve použitém příkazu `gitolite setup`) má práva pro čtení i zápis k repozitáři `gitolite-admin` a také stejnojmenný veřejný klíč.
 
-Přidávání dalších uživatelů je snadné. Pokud chceme přidat uživatele „alice“, získáme její veřejný klíč, pojmenujeme jej `alice.pub` a umístíme jej do adresáře `keydir`. Je součástí klonu repozitáře `gitolite-admin`, který jsme právě vytvořili na pracovní stanici. Přidáme, potvrdíme a odešleme změny (add, commit, push). Tím jsme dosáhli přidání uživatele.
+Přidávání dalších uživatelů je snadné.  Pokud chceme přidat uživatele „alice“, získáme její veřejný klíč, pojmenujeme jej `alice.pub` a umístíme jej do adresáře `keydir`. Je součástí klonu repozitáře `gitolite-admin`, který jsme právě vytvořili na pracovní stanici.  Přidáme, potvrdíme a odešleme změny (add, commit, push). Tím jsme dosáhli přidání uživatele.
 
 Syntaxe konfiguračního souboru pro Gitolite je dobře dokumentovaná, takže zde zdůrazníme jen pár věcí.
 
-Pro usnadnění můžete uživatele i repozitáře sdružovat do skupin. Jména skupin se chovají jako makra; když je definujete, je úplně jedno jestli jde o projekty nebo uživatele; rozdíl se pozná až v momentu, kdy „makro“ *použijete*.
+Pro usnadnění můžete uživatele i repozitáře sdružovat do skupin.  Jména skupin se chovají jako makra; když je definujete, je úplně jedno jestli jde o projekty nebo uživatele; rozdíl se pozná až v momentu, kdy „makro“ *použijete*.
 
 	@oss_repos      = linux perl rakudo git gitolite
 	@secret_repos   = fenestra pear
@@ -580,7 +580,7 @@ Pro usnadnění můžete uživatele i repozitáře sdružovat do skupin. Jména 
 	@engineers      = sitaram dilbert wally alice
 	@staff          = @admins @engineers @interns
 
-Můžete nastavovat přístupová práva na úrovni referencí. Skupina interns může v následujícím případě odesílat pouze větev „int“. Skupina engineers mohou odesílat větve, jejichž názvy začínají na „eng-“ a značky, které začínají na „rc“ a pak následuje číslo. A skupina admins může dělat cokoliv (včetně vracení změn) v kterékoliv referenci.
+Můžete nastavovat přístupová práva na úrovni referencí.  Skupina interns může v následujícím případě odesílat pouze větev „int“.  Skupina engineers mohou odesílat větve, jejichž názvy začínají na „eng-“ a značky, které začínají na „rc“ a pak následuje číslo.  A skupina admins může dělat cokoliv (včetně vracení změn) v kterékoliv referenci.
 
 	repo @oss_repos
 	    RW  int$                = @interns
@@ -588,11 +588,11 @@ Můžete nastavovat přístupová práva na úrovni referencí. Skupina interns 
 	    RW  refs/tags/rc[0-9]   = @engineers
 	    RW+                     = @admins
 
-Výraz za `RW` nebo `RW+` je regulární výraz (regex), se kterým se porovnává jméno odesílané reference (ref). Nazvěme jej tedy „refex“! Refex může mít samozřejmě mnohem více použití než je tady ukázáno, takže si dejte pozor ať to nepřeženete, zvláště pokud nejste kovaní v perlovských regulárních výrazech.
+Výraz za `RW` nebo `RW+` je regulární výraz (regex), se kterým se porovnává jméno odesílané reference (ref).  Nazvěme jej tedy „refex“!  Refex může mít samozřejmě mnohem více použití než je tady ukázáno, takže si dejte pozor ať to nepřeženete, zvláště pokud nejste kovaní v perlovských regulárních výrazech.
 
 Gitolite přidává prefix `refs/heads/` jako usnadnění syntaxe, pokud refex nezačíná na `refs/`, jak jste mohli odhadnout z příkladu.
 
-Důležitou vlastností syntaxe konfiguračního souboru je to, že všechna pravidla pro repozitáře nemusí být na jednom místě. Můžete nechat obecná nastavení, jako třeba pravidla pro všechny `oss_repos` z příkladu, a potom později přidávat pravidla pro více specifické případy. Např.:
+Důležitou vlastností syntaxe konfiguračního souboru je to, že všechna pravidla pro repozitáře nemusí být na jednom místě.  Můžete nechat obecná nastavení, jako třeba pravidla pro všechny `oss_repos` z příkladu, a potom později přidávat pravidla pro více specifické případy. Například:
 
 	repo gitolite
 	    RW+                     = sitaram
@@ -601,25 +601,25 @@ Toto pravidlo se pak přidá do skupiny pravidel repozitáře `gitolite`.
 
 Teď by vás mohlo zajímat, jak jsou vlastně pravidla pro přístup aplikována, pojďme se na to tedy krátce podívat.
 
-V Gitolite jsou dvě úrovně kontroly přístupů. První je úroveň repozitářů; jestliže máte práva na čtení (nebo zápis) *k jakékoliv* referenci v repozitáři, máte tím práva na čtení (nebo zápis) k tomuto repozitáři. Tohle je jediná možnost jakou měl nástroj Gitosis.
+V Gitolite jsou dvě úrovně kontroly přístupů.  První je úroveň repozitářů; jestliže máte práva na čtení (nebo zápis) *k jakékoliv* referenci v repozitáři, máte tím práva na čtení (nebo zápis) k tomuto repozitáři.
 
-Druhá úroveň se dá použít jen pro práva pro „zápis“ a vázána na větve nebo značky v repozitáři. Uživatelské jméno uživatele snažícího se o přístup (`W` nebo `+`) a jméno reference, kterou uživatel chce aktualizovat, jsou dané. Pravidla pro přístup jsou procházena postupně v pořadí, tak jak jsou uvedena v konfiguračním souboru a hledají se záznamy odpovídající této kombinaci uživatelského jména a reference (nezapomeňte ale, že refname se porovnává jako regulární výraz nikoliv jako pouhý řetězec). Jestliže je nalezen odpovídající záznam, odesílání je povoleno. Pokud není nalezeno nic, je přístup zamítnut.
+Druhá úroveň se dá použít jen pro práva pro „zápis“ a vázána na větve nebo značky v repozitáři.  Uživatelské jméno uživatele snažícího se o přístup (`W` nebo `+`) a jméno reference, kterou uživatel chce aktualizovat, jsou dané.  Pravidla pro přístup jsou procházena postupně v pořadí, tak jak jsou uvedena v konfiguračním souboru a hledají se záznamy odpovídající této kombinaci uživatelského jména a reference (nezapomeňte ale, že refname se porovnává jako regulární výraz nikoliv jako pouhý řetězec).  Jestliže je nalezen odpovídající záznam, odesílání je povoleno.  Pokud není nalezeno nic, je přístup zamítnut.
 
 ### Rozšířené řízení přístupu pravidly typu „odmítnutí“ ###
 
-Prozatím jsme si ukázali jen oprávnění nastavená na jednu z hodnot `R`, `RW` nebo `RW+`. Ale Gitolite dovoluje nastavení dalšího oprávnění: `-` s významem „odmítnutí“. To vám dává mnohem více možností, ale za cenu zvýšení složitosti. Popadnutí sítem pravidel už totiž není *jedinou* možností vedoucí k zamítnutí přístupu. *Záleží na pořadí pravidel!*
+Prozatím jsme si ukázali jen oprávnění nastavená na jednu z hodnot `R`, `RW` nebo `RW+`.  Ale Gitolite dovoluje nastavení dalšího oprávnění: `-` s významem „odmítnutí“.  To vám dává mnohem více možností, ale za cenu zvýšení složitosti. Popadnutí sítem pravidel už totiž není *jedinou* možností vedoucí k zamítnutí přístupu. *Záleží na pořadí pravidel!*
 
-Řekněme, že ve výše uvedené situaci budeme chtít, aby skupina engineers mohla vracet změny v jakékoliv větvi *s výjimkou* větví `master` a `integ`. Udělá se to následovně:
+Řekněme, že ve výše uvedené situaci budeme chtít, aby skupina engineers mohla vracet změny v jakékoliv větvi *s výjimkou* větví `master` a `integ`.  Udělá se to následovně:
 
 	    RW  master integ    = @engineers
 	    -   master integ    = @engineers
 	    RW+                 = @engineers
 
-Pravidla se  budou opět procházet shora dolů až do momentu, kdy narazíte na shodu s vaším režimem přístupu nebo na pravidlo typu odmítnutí (deny). Odeslání do větve `master` nebo `integ`, která nevracejí zpět změny (non-rewind push), jsou povolena prvním pravidlem. Odeslání, která vracejí změny (rewind push) do těchto větví, neodpovídají prvnímu pravidlu. Porovnají se tedy s druhým pravidlem a na jeho základě budou zamítnuty. Jakékoliv odeslání (bez ohledu na to zda se jedná o vracení změn nebo ne) do jiných referencí než `master` nebo `integ` nebudou odpovídat ani prvnímu ani druhému pravidlu, a proto bude díky třetímu pravidlu povoleno.
+Pravidla se  budou opět procházet shora dolů až do momentu, kdy narazíte na shodu s vaším režimem přístupu nebo na pravidlo typu odmítnutí (deny).  Odeslání do větve `master` nebo `integ`, která nevracejí zpět změny (non-rewind push), jsou povolena prvním pravidlem.  Odeslání, která vracejí změny (rewind push) do těchto větví, neodpovídají prvnímu pravidlu. Porovnají se tedy s druhým pravidlem a na jeho základě budou zamítnuty.  Jakékoliv odeslání (bez ohledu na to zda se jedná o vracení změn nebo ne) do jiných referencí než `master` nebo `integ` nebudou odpovídat ani prvnímu ani druhému pravidlu, a proto bude díky třetímu pravidlu povoleno.
 
 ### Omezení odesílání změn vázané na soubory ###
 
-K omezení odesílání do určitých větví a určitými uživateli můžete přidat také omezení určující, které soubory mohou uživatelé měnit. Například  soubor Makefile (a možná některé programy) by asi neměl kdokoliv měnit, protože je na něm závislá řada dalších věcí. Pokud se neupraví *správným způsobem*, něco by se pokazilo. Nástroji Gitolite můžeme říct:
+K omezení odesílání do určitých větví a určitými uživateli můžete přidat také omezení určující, které soubory mohou uživatelé měnit.  Například  soubor Makefile (a možná některé programy) by asi neměl kdokoliv měnit, protože je na něm závislá řada dalších věcí. Pokud se neupraví *správným způsobem*, něco by se pokazilo.  Nástroji Gitolite můžeme říct:
 
     repo foo
         RW                      =   @junior_devs @senior_devs
@@ -632,7 +632,7 @@ Uživatelé, kteří přecházejí ze starší verze Gitolite by si měli dát p
 
 Konečně Gitolite má také funkci, která se nazývá „osobní větve“ (nebo raději „jmenný prostor osobních větví“) a může být velmi užitečná v korporátním prostředí.
 
-Hodně výměny kódu probíhá v otevřeném gitovém světě metodou „prosím stáhněte si“. V korporátním prostředí ovšem nebývá jakýkoliv přístup bez prokázání totožnosti vítán a pracovní stanice vývojáře nemůže provádět autentizaci, takže můžete na centrální server odesílat, ale musíte požádat někoho jiného, když odtud chcete stahovat.
+Hodně výměny kódu probíhá v otevřeném gitovém světě metodou „prosím stáhněte si“.  V korporátním prostředí ovšem nebývá jakýkoliv přístup bez prokázání totožnosti vítán a pracovní stanice vývojáře nemůže provádět autentizaci, takže můžete na centrální server odesílat, ale musíte požádat někoho jiného, když odtud chcete stahovat.
 
 To by za normálních okolností způsobilo stejný zmatek ve jménech větví jako v centralizovaných systémech správy verzí a navíc nastavování přístupových práv by administrátorovi přidalo práci.
 
@@ -640,15 +640,15 @@ Gitolite vám umožní nadefinovat pro každého vývojáře jmenné prostory s 
 
 ### „Wildcard“ repozitáře ###
 
-Gitolite vám umožní určit repozitáře zástupnými znaky (wildcards; ve skutečnosti jde o perlovské regulární výrazy) -- jako například u náhodně vybraného příkladu `assignments/s[0-9][0-9]/a[0-9][0-9]`. Umožní nám též přidělit nový režim oprávnění (`C`), který uživatelům povoluje vytvářet repozitáře popsané zástupnými znaky, automaticky přidělí vlastnictví konkrétnímu uživateli, který jej vytvořil, umožní mu přidělit oprávnění `R` a `RW` dalším spolupracovníkům atd. Podrobnosti opět hledejte v dokumentaci.
+Gitolite vám umožní určit repozitáře zástupnými znaky (wildcards; ve skutečnosti jde o perlovské regulární výrazy) -- jako například u náhodně vybraného příkladu `assignments/s[0-9][0-9]/a[0-9][0-9]`.  Umožní nám též přidělit nový režim oprávnění (`C`), který uživatelům povoluje vytvářet repozitáře popsané zástupnými znaky, automaticky přidělí vlastnictví konkrétnímu uživateli, který jej vytvořil, umožní mu přidělit oprávnění `R` a `RW` dalším spolupracovníkům atd. Podrobnosti opět hledejte v dokumentaci.
 
 ### Další vlastnosti ###
 
 Vysvětlení Gitolite završíme přehledem několika vlastností, které jsou detailně popsány v dokumentaci.
 
-**Logování:** Gitolite loguje všechny úspěšné přístupy. Jestliže máte volná pravidla pro přidělování oprávnění vracet změny (práva `RW+`) a stane se, že někdo takto „zkazí“ větev `master`, je tu ještě log soubor, který vám zachrání život, protože v něm můžete postižené SHA najít.
+**Logování:** Gitolite loguje všechny úspěšné přístupy.  Jestliže máte volná pravidla pro přidělování oprávnění vracet změny (práva `RW+`) a stane se, že někdo takto „zkazí“ větev `master`, je tu ještě log soubor, který vám zachrání život, protože v něm můžete postižené SHA najít.
 
-**Přehledy uživatelských oprávnění:** Další příjemnou vlastností je to, co se stane, pokud se pouze pokusíte připojit pomocí SSH na server. Gitolite vám ukáže, ke kterým repozitářům máte přístup a s jakými oprávněními. Příklad:
+**Přehledy uživatelských oprávnění:** Další příjemnou vlastností je to, co se stane, pokud se pouze pokusíte připojit pomocí SSH na server.  Gitolite vám ukáže, ke kterým repozitářům máte přístup a s jakými oprávněními.  Příklad:
 
         hello scott, this is git@git running gitolite3 v3.01-18-g9609868 on git 1.7.4.4
 
@@ -660,7 +660,7 @@ Vysvětlení Gitolite završíme přehledem několika vlastností, které jsou d
              R     indic_web_input
              R     shreelipi_converter
 
-**Delegace:** Pro opravdu velké instalace můžete delegovat zodpovědnost za skupiny a repozitáře dalším lidem a nechat je spravovat jednotlivé části nezávisle. To snižuje vytížení hlavního administrátora, který tím přestává být úzkým místem správy.
+**Delegace:** Pro opravdu velké instalace můžete delegovat zodpovědnost za skupiny a repozitáře dalším lidem a nechat je spravovat jednotlivé části nezávisle.  To snižuje vytížení hlavního administrátora, který tím přestává být úzkým místem správy.
 
 **Zrcadlení:** Gitolite vám pomůže se správou více zrcadel a při výpadku hlavního serveru můžete snadno přepnout na jiný.
 
@@ -691,7 +691,7 @@ vložte tento skript:
 	    /opt/git/
 	respawn
 
-Z bezpečnostních důvodů důrazně doporučujeme, aby byl tento démon spuštěn jako uživatel, který má k repozitářům oprávnění pouze pro čtení. To lze snadno zajistit vytvořením nového uživatele 'git-ro' a spuštěním démona v jeho roli. My ho pro zjednodušení spustíme jako uživatele 'git', kterého už využívá nástroj Gitosis.
+Z bezpečnostních důvodů důrazně doporučujeme, aby byl tento démon spuštěn jako uživatel, který má k repozitářům oprávnění pouze pro čtení. To lze snadno zajistit vytvořením nového uživatele 'git-ro' a spuštěním démona v jeho roli.  My ho pro zjednodušení spustíme jako uživatele 'git', kterého už využívá nástroj Gitosis.
 
 Při restartování počítače se démon Git spustí automaticky. V případě pádu démona bude jeho činnost automaticky obnovena. Pokud nechcete počítač restartovat, spusťte tento příkaz:
 

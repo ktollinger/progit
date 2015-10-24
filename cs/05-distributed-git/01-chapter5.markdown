@@ -84,19 +84,18 @@ Spustíte-li tento příkaz před zapsáním revize, můžete se rozhodnout, zda
 
 Dále se snažte provádět každou revizi jako logicky samostatný soubor změn. Pokud je to možné, snažte se provádět stravitelné změny. Není právě ideální pracovat celý víkend na pěti různých problémech a v pondělí je všechny najednou odeslat v jedné velké revizi. I pokud nebudete během víkendu zapisovat revize, využijte v pondělí oblasti připravených změn a rozdělte svou práci alespoň do stejného počtu revizí, kolik je řešených problémů, a přidejte k nim vysvětlující zprávy. Pokud některé změny modifikují tentýž soubor, zkuste použít příkaz `git add --patch` a připravit soubory k zapsání po částech (podrobnosti v kapitole 6). Snímek projektu na vrcholu větve bude stejný, ať zapíšete jednu revizi, nebo pět (za předpokladu, že vložíte všechny změny). Snažte se proto usnadnit práci svým kolegům, kteří – možná – budou vaše změny kontrolovat. Díky tomuto přístupu také později snáze vyjmete nebo vrátíte některou z provedených změn, bude-li to třeba. Kapitola 6 popisuje několik užitečných triků, jak v systému Git přepsat historii a jak interaktivně připravovat soubory k zapsání. Používejte tyto nástroje k udržení čisté a srozumitelné historie.
 
-Poslední věcí, na niž se vyplatí soustředit pozornost, jsou zprávy k revizím. Pokud si zvyknete vytvářet k revizím kvalitní zprávy, bude pro vás práce a kooperace v systému Git mnohem jednodušší. Zpráva by měla obvykle začínat samostatným řádkem o maximálně 50 znacích, v níž stručně popíšete soubor provedených změn. Za ním by měl následovat prázdný řádek a za ním podrobnější popis revize. Projekt Git vyžaduje, aby podrobnější popis revize obsahoval vaši motivaci ke změnám a vymezil jejich implementaci na pozadí předchozích kroků. Tuto zásadu je dobré dodržovat. Vytváříte-li zprávy k revizím v angličtině, často se také doporučuje používat rozkazovací způsob, tj. příkazy. Místo „I added tests for“ nebo „Adding tests for“ používejte raději „Add tests for“.
-Zde uvádíme vzor, jehož autorem je Tim Pope a v originále je k nalezení na stránkách tpope.net:
+Poslední věcí, na niž se vyplatí soustředit pozornost, jsou zprávy k revizím. Pokud si zvyknete vytvářet k revizím kvalitní zprávy, bude pro vás práce a kooperace v systému Git mnohem jednodušší. Zpráva by měla obvykle začínat samostatným řádkem o maximálně 50 znacích, v níž stručně popíšete soubor provedených změn. Za ním by měl následovat prázdný řádek a za ním podrobnější popis revize. Projekt Git vyžaduje, aby podrobnější popis revize obsahoval vaši motivaci ke změnám a vymezil jejich implementaci na pozadí předchozích kroků. Tuto zásadu je dobré dodržovat. Vytváříte-li zprávy k revizím v angličtině, často se také doporučuje používat rozkazovací způsob. Jinými slovy, formulujte je jako příkazy. Místo „I added tests for“ nebo „Adding tests for“ používejte raději „Add tests for“. Zde uvádíme vzor, jehož autorem je Tim Pope a v originále je k nalezení na stránkách tpope.net:
 
 	Krátké (do 50 znaků) shrnutí změn
 
-	Podrobnější popis revize, je-li třeba. Snažte se nepřesáhnout
-	zhruba 72 znaků. V některých kontextech	je první řádek koncipován
-	jako předmět e-mailu a zbytek textu jako jeho tělo. Prázdný řádek
+	Podrobnější popis revize, je-li třeba.  Snažte se nepřesáhnout
+	zhruba 72 znaků.  V některých kontextech  je první řádek koncipován
+	jako předmět e-mailu a zbytek textu jako jeho tělo.  Prázdný řádek
 	oddělující shrnutí od těla zprávy je nezbytně nutný (pokud
 	nehodláte vypustit celé tělo). Spojení obou částí může zmást
 	některé nástroje, např. přeskládání.
 
-	Další odstavce následují za prázdným řádkem.
+	Další odstavce se oddělují prázdným řádkem.
 
 	 - Můžete používat i odrážky.
 
@@ -221,7 +220,7 @@ Jessica nyní může začlenit tematickou větev do své větve `master`, začle
 	Switched to branch "master"
 	Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
 
-Jako první může začlenit buď větev `origin/master` nebo `issue54`. Obě směřují vpřed, a tak jejich pořadí nehraje žádnou roli. Konečný snímek bude stejný, ať zvolí jakékoli pořadí, mírně se bude lišit jen historie revizí. Jessica se rozhodne začlenit jako první větev `issue54`:
+Jako první může začlenit buď větev `origin/master` nebo `issue54`. Obě jsou z linie předchozích revizí referenčního zdroje (upstream), a tak jejich pořadí nehraje žádnou roli. Konečný snímek bude stejný, ať zvolí jakékoli pořadí, mírně se bude lišit jen historie revizí. Jessica se rozhodne začlenit jako první větev `issue54`:
 
 	$ git merge issue54
 	Updating fbff5bc..4af4298
@@ -427,7 +426,7 @@ Příkaz `request-pull` vezme základní větev (základnu), do níž chcete nat
 
 Výstup příkazu lze odeslat správci. Sdělí mu, odkud daná větev pochází, podá mu přehled o revizích a řekne mu, odkud lze práci stáhnout.
 
-U projektů, u nichž nejste v roli správce, je většinou jednodušší, aby vaše větev `master` stále sledovala větev `origin/master` a abyste práci prováděli v tematických větvích, jichž se můžete beze všeho vzdát v případě, že budou odmítnuty. Jednotlivé úkoly izolované v tematických větvích mají také tu výhodu, že snáze přeskládáte svou práci, jestliže se průběžně posouvá konec hlavního repozitáře a vaše revize už nelze aplikovat čistě. Pokud například chcete do projektu přispět druhým tématem, nerozvíjejte svou práci v tematické větvi, kterou jste právě odeslali. Začněte znovu od začátku z větve `master` hlavního repozitáře:
+U projektů, u nichž nejste v roli správce, je většinou jednodušší, aby vaše větev `master` stále sledovala větev `origin/master` a abyste práci prováděli v tematických větvích, jichž se můžete beze všeho vzdát v případě, že budou odmítnuty.  Jednotlivé úkoly izolované v tematických větvích mají také tu výhodu, že snáze přeskládáte svou práci, jestliže se průběžně posouvá konec hlavního repozitáře a vaše revize už nelze aplikovat čistě. Pokud například chcete do projektu přispět druhým tématem, nerozvíjejte svou práci v tematické větvi, kterou jste právě odeslali. Začněte znovu od začátku z větve `master` hlavního repozitáře:
 
 	$ git checkout -b featureB origin/master
 	$ (work)
@@ -471,7 +470,7 @@ Obrázek 5-18. Historie revizí s větví featureBv2
 
 ### Velký veřejný projekt ###
 
-Mnoho větších projektů si vytvořilo vlastní, odlišné procedury k doručování záplat. U každého projektu se tak budete muset informovat o konkrétních pravidlech. U mnoha větších veřejných projektů se však záplaty doručují na základě poštovní konference vývojářů, a proto se teď zaměřím na tento případ.
+Mnoho větších projektů si vytvořilo vlastní, odlišné procedury pro přijímání záplat. U každého projektu se tak budete muset informovat o konkrétních pravidlech, protože se mohou lišit. U mnoha větších veřejných projektů se však záplaty doručují na základě poštovní konference vývojářů, a proto se teď zaměřím na tento případ.
 
 Pracovní postup je podobný jako v předchozím případě. Pro každou sérii záplat, na níž pracujete, vytvoříte samostatnou tematickou větev. Liší se to, jak je budete doručovat do projektu. Místo toho, abyste rozštěpili projekt a odeslali své změny do vlastní zapisovatelné verze, vygenerujete e-mailovou verzi každé série revizí a pošlete je e-mailem do poštovní konference vývojářů:
 
@@ -672,7 +671,7 @@ Tento příkaz vloží poznámku o konfliktu (conflict marker) do všech soubor�
 	$ git am --resolved
 	Applying: seeing if this helps the gem
 
-Pokud chcete, aby se Git pokusil vyřešit konflikt inteligentněji, můžete zadat parametr `-3`. Git se pokusí o třícestné sloučení. Tato možnost není nastavena jako výchozí, protože ji nelze použít v situaci, kdy revize, o níž záplata říká, že je na ní založen, není obsažena ve vašem repozitáři. Pokud tuto revizi vlastníte – byla-li záplata založena na veřejné revizi – počíná si parametr `-3` při aplikaci kolidující záplaty většinou mnohem inteligentněji.
+Pokud chcete, aby se Git pokusil vyřešit konflikt inteligentněji, můžete zadat parametr `-3`. Git se pokusí o třícestné sloučení. Tato možnost není nastavena jako výchozí, protože ji nelze použít v situaci, kdy revize, o níž záplata říká, že je na ní založena, není obsažena ve vašem repozitáři. Pokud tuto revizi vlastníte – byla-li záplata založena na veřejné revizi – počíná si parametr `-3` při aplikaci kolidující záplaty většinou mnohem inteligentněji.
 
 	$ git am -3 0001-seeing-if-this-helps-the-gem.patch
 	Applying: seeing if this helps the gem
@@ -769,7 +768,7 @@ Když už je práce v tematické větvi připravena a může být integrována d
 
 #### Pracovní postupy založené na slučování ####
 
-Jeden jednoduchý pracovní postup začlení vaší práci do větve `master`. V tomto scénáři obsahuje vaše větev `master` převážně jen stabilní kód. Máte-li v tematické větvi práci, kterou jste vytvořili nebo kterou vám někdo doručil a vy jste ji schválili, začleníte ji do své hlavní větve, smažete tematickou větev a proces může pokračovat. Máme-li repozitář s prací ve dvou větvích pojmenovaných `ruby_client` a `php_client`, který vypadá jako na obrázku 5-19, a začleníme nejprve větev `ruby_client` a poté `php_client`, bude naše historie vypadat jako na obrázku 5-20.
+Jeden jednoduchý pracovní postup začlení vaší práci do větve `master`. V tomto scénáři obsahuje vaše větev `master` převážně jen stabilní kód. Máte-li v tematické větvi práci, kterou jste vytvořili nebo kterou vám někdo doručil a vy jste ji schválili, začleníte ji do své hlavní větve, smažete tematickou větev a proces může pokračovat.  Máme-li repozitář s prací ve dvou větvích pojmenovaných `ruby_client` a `php_client`, který vypadá jako na obrázku 5-19, a začleníme nejprve větev `ruby_client` a poté `php_client`, bude naše historie vypadat jako na obrázku 5-20.
 
 Insert 18333fig0519.png
 Obrázek 5-19. Historie s několika tematickými větvemi
@@ -811,7 +810,7 @@ Byla-li tematická větev konečně začleněna do větve `master`, může být 
 
 Jiní správci dávají před začleněním práce z příspěvků přednost jejímu přeskládání nebo částečnému převzetí na vrchol hlavní větve, čímž udržují historii co nejlineárnější. Máte-li určitou práci v tematické větvi a rozhodli jste se, že ji integrujete, přejdete na tuto větev a spustíte příkaz rebase, jímž znovu sestavíte příslušné změny na vrcholu svojí aktuální hlavní větve (příp. větve `develop` apod.). Pokud vše funguje, můžete větev `master` posunout rychle vpřed a výsledkem procesu bude lineární historie projektu.
 
-Druhým způsobem, jak přesunout práci z jedné větve do druhé, je tzv. částečné převzetí (angl. cherry picking, tedy něco jako „vyzobání třešniček“). Částečné převzetí lze v systému Git přirovnat k přeskládání jedné revize. Při této operaci vezme systém záplatu, která byla provedena v dané revizi, a pokusí se ji znovu aplikovat na větev, na níž se právě nacházíte. To využijete například v situaci, kdy máte několik revizí v tematické větvi, ale chcete integrovat pouze jednu z nich. Částečné převzetí však můžete použít i místo přeskládání, pokud máte v tematické větvi pouze jednu revizi. Uvažujme tedy projekt, který vypadá jako na obrázku 5-26.
+Druhým způsobem, jak přesunout práci z jedné větve do druhé, je tzv. částečné převzetí (angl. cherry picking, tedy něco jako „vyzobání třešniček“). Částečné převzetí lze v systému Git přirovnat k přeskládání jedné revize. Při této operaci vezme systém záplatu, která byla provedena v dané revizi, a pokusí se ji znovu aplikovat na větev, na níž se právě nacházíte. To využijete například v situaci, kdy máte několik revizí v tematické větvi, ale chcete integrovat pouze jednu z nich. Částečné převzetí však můžete použít i místo přeskládání, pokud máte v tematické větvi pouze jednu revizi. Dejme tomu, že máme projekt, který vypadá jako na obrázku 5-26.
 
 Insert 18333fig0526.png
 Obrázek 5-26. Uvažovaná historie před částečným převzetím

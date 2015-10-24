@@ -1,10 +1,10 @@
 # Úvod #
 
-Tato kapitola vám ve stručnosti představí systém Git. Začneme od samého začátku. Nahlédneme do historie nástrojů ke správě verzí, poté se budeme věnovat tomu, jak spustit systém Git ve vašem počítači, a nakonec se podíváme na možnosti úvodního nastavení. V této kapitole se dozvíte, k čemu Git slouží a proč byste ho měli používat. Kromě toho se také naučíte, jak Git nastavit podle svých potřeb.
+Tato kapitola vám ve stručnosti představí systém Git.  Nejdříve si vysvětlíme něco z historie nástrojů pro správu verzí, poté se budeme věnovat tomu, jak spustit systém Git ve vašem počítači, a nakonec se podíváme na to, co musíme nastavit, abychom s ním mohli začít pracovat.  Na konci kapitoly byste měli rozumět tomu, proč tady Git je, proč byste jej měli používat a měli byste si jej umět nastavit podle svých potřeb.
 
 ## Správa verzí ##
 
-Co je to správa verzí a proč by vás měla zajímat? Správa verzí je systém, který zaznamenává změny souboru nebo sady souborů v průběhu času, a uživatel tak může kdykoli obnovit jeho/jejich konkrétní verzi (tzv. verzování). Příklady verzovaných souborů jsou v této knize ilustrovány na zdrojovém kódu softwaru, avšak ve skutečnosti lze verzování provádět téměř se všemi typy souborů v počítači.
+Co je to správa verzí a proč by vás měla zajímat? Správa verzí je systém, který zaznamenává změny souboru nebo sady souborů tak, abyste se mohli později k určité verzi vrátit. Příklady verzovaných souborů jsou v této knize ilustrovány na zdrojových textech programů, avšak ve skutečnosti lze správu verzí použít pro libovolný typ souborů.
 
 Pokud jste grafik nebo webdesigner a chcete uchovávat všechny verze obrázku nebo všechna rozložení stránky (což jistě není k zahození), je pro vás systém správy verzí (zkráceně VCS z anglického Version Control System) ideálním nástrojem. VCS umožňuje vrátit jednotlivé soubory nebo celý projekt do předchozího stavu, porovnávat změny provedené v průběhu času, zjistit, kdo naposledy upravil něco, co nyní možná způsobuje problémy, kdo vložil jakou verzi a kdy a mnoho dalšího. Používáte-li verzovací systém, většinou to také znamená, že snadno obnovíte soubory, které jste ztratili nebo v nichž byly provedeny nežádoucí změny. Všechny funkcionality verzovacího systému můžete navíc používat velice jednoduchým způsobem.
 
@@ -28,11 +28,11 @@ Obrázek 1-2. Diagram centralizované správy verzí
 
 Nabízí ostatně mnoho výhod, zejména v porovnání s lokálními systémy VCS. Každý například — do určité míry — ví, co dělají ostatní účastníci projektu a administrátoři mají přesnou kontrolu nad jednotlivými právy. Kromě toho je podstatně jednodušší spravovat CVCS, než pracovat s lokálními databázemi na jednotlivých klientech.
 
-Avšak i tato koncepce má závažné nedostatky. Tímto nejkřiklavějším je riziko kolapsu celého projektu po výpadku jediného místa — centrálního serveru. Pokud takový server na hodinu vypadne, pak během této hodiny buď nelze pracovat vůbec, nebo přinejmenším není možné ukládat změny ve verzích souborů, na nichž uživatelé právě pracují. A dojde-li k poruše pevného disku, na němž je uložena centrální databáze, a disk nebyl předem zálohován, dojde ke ztrátě všech dat, celé historie projektu, s výjimkou souborů aktuálních verzí, jež mají uživatelé v lokálních počítačích. Ke stejnému riziku jsou náchylné také lokální systémy VCS. Jestliže máte celou historii projektu uloženou na jednom místě, hrozí, že přijdete o vše.
+Avšak i tato koncepce má závažné nedostatky. Tím nejkřiklavějším je riziko kolapsu celého projektu po výpadku jediného místa — centrálního serveru. Pokud takový server na hodinu vypadne, pak během této hodiny buď nelze pracovat vůbec, nebo přinejmenším není možné ukládat změny ve verzích souborů, na nichž uživatelé právě pracují. A dojde-li k poruše pevného disku, na němž je uložena centrální databáze, a disk nebyl správně zálohován, dojde ke ztrátě všech dat, celé historie projektu, s výjimkou souborů aktuálních verzí, jež mají uživatelé v lokálních počítačích. Lokální systémy pro správu verzí trpí stejným problémem. Kdykoliv máte celou historii projektu uloženou na jednom místě, hrozí, že přijdete o vše.
 
 ### Distribuované systémy správy verzí ###
 
-V tomto místě přicházejí ke slovu tzv. distribuované systémy správy verzí (DVCS z angl. Distributed Version Control System). V systémech DVCS (např. Git, Mercurial, Bazaar nebo Darcs) uživatelé nestahují pouze nejnovější verzi souborů (tzv. snímek, anglicky snapshot), ale uchovávají kompletní kopii repozitáře (repository). Pokud v takové situaci dojde ke kolapsu serveru, lze jej obnovit zkopírováním repozitáře od libovolného uživatele. Každá lokální kopie (checkout) je plnohodnotnou zálohou všech dat (viz obrázek 1-3).
+V tomto místě přicházejí ke slovu tzv. distribuované systémy správy verzí (DVCS z angl. Distributed Version Control System). V systémech DVCS (jako jsou například Git, Mercurial, Bazaar nebo Darcs) uživatelé nestahují pouze nejnovější verzi souborů (tzv. snímek, anglicky snapshot), ale uchovávají kompletní kopii repozitáře (repository). Pokud v takové situaci dojde ke kolapsu serveru a pokud jej tyto systémy využívaly, můžeme obsah serveru obnovit zkopírováním repozitáře od libovolného uživatele. Každá lokální kopie (checkout) představuje úplnou zálohu všech dat (viz obrázek 1-3).
 
 Insert 18333fig0103.png
 Obrázek 1-3. Diagram distribuované správy verzí
@@ -46,9 +46,9 @@ Tak jako mnoho velkých věcí v lidské historii se i systém Git zrodil z krea
 V roce 2005 se zhoršily vztahy mezi komunitou, která vyvíjela jádro Linuxu, a komerční společností, která vyvinula BitKeeper, a společnost přestala tento systém poskytovat zdarma. To přimělo komunitu vývojářů Linuxu (a zejména Linuse Torvaldse, tvůrce Linuxu), aby vyvinula vlastní nástroj, založený na poznatcích, které nasbírala při užívání systému BitKeeper. Mezi požadované vlastnosti systému patřily zejména:
 
 *	Rychlost,
-*	jednoduchý design,
+*	jednoduchý návrh,
 *	silná podpora nelineárního vývoje (tisíce paralelních větví),
-*	plná distribuovatelnost,
+*	plně distribuovaný,
 *	schopnost efektivně spravovat velké projekty, jako je linuxové jádro (rychlost a objem dat).
 
 Od svého vzniku v roce 2005 se Git vyvinul a vyzrál v snadno použitelný systém, který si dodnes uchovává své prvotní kvality. Je extrémně rychlý, velmi efektivně pracuje i s velkými projekty a nabízí skvělý systém větvení pro nelineární způsob vývoje (viz kapitola 3).
@@ -73,11 +73,11 @@ Toto je důležitý rozdíl mezi systémem Git a téměř všemi ostatními syst
 
 ### Téměř každá operace je lokální ###
 
-Většina operací v systému Git vyžaduje ke své činnosti pouze lokální soubory a zdroje a nejsou potřeba informace z jiných počítačů v síti. Pokud jste zvyklí pracovat se systémy CVCS, kde je většina operací poznamenána latencí sítě, patrně vás při práci v systému Git napadne, že mu bohové rychlosti dali do vínku nadpřirozené schopnosti. Protože máte celou historii projektu uloženou přímo na svém lokálním disku, probíhá většina operací takřka okamžitě.
+Většina operací v systému Git vyžaduje ke své činnosti pouze lokální soubory a zdroje a nejsou potřeba informace z jiných počítačů v síti.  Pokud jste zvyklí pracovat se systémy CVCS, kde je většina operací poznamenána latencí sítě, patrně vás při práci v systému Git napadne, že mu bohové rychlosti dali do vínku nadpřirozené schopnosti. Protože máte celou historii projektu uloženou přímo na svém lokálním disku, probíhá většina operací takřka okamžitě.
 
 Pokud chcete například procházet historii projektu, Git kvůli tomu nemusí vyhledávat informace na serveru — načte je jednoduše přímo z vaší lokální databáze. Znamená to, že se historie projektu zobrazí téměř hned. Pokud si chcete prohlédnout změny provedené mezi aktuální verzí souboru a týmž souborem před měsícem, Git vyhledá měsíc starý soubor a provede lokální výpočet rozdílů, aniž by o to musel žádat vzdálený server nebo stahovat starší verzi souboru ze vzdáleného serveru a poté provádět lokální výpočet.
 
-To také znamená, že je jen velmi málo operací, které nemůžete provádět offline nebo bez připojení k VPN. Jste-li v letadle nebo ve vlaku a chcete pokračovat v práci, můžete beze všeho zapisovat nové revize. Ty odešlete až po opětovném připojení k síti. Jestliže přijedete domů a zjistíte, že VPN klient nefunguje, stále můžete pracovat. V mnoha jiných systémech je takový postup nemožný nebo přinejmenším obtížný. Například v systému Perforce toho lze bez připojení k serveru dělat jen velmi málo, v systémech Subversion a CVS můžete sice upravovat soubory, ale nemůžete zapisovat změny do databáze, neboť ta je offline. Možná to vypadá jako maličkost, ale divili byste se, jak velký je v tom rozdíl.
+To také znamená, že je jen velmi málo operací, které nemůžete provádět offline nebo bez připojení k VPN. Jste-li v letadle nebo ve vlaku a chcete pokračovat v práci, můžete beze všeho zapisovat nové revize. Ty odešlete až po opětovném připojení k síti. Jestliže přijedete domů a zjistíte, že VPN klient nefunguje, stále můžete pracovat. V mnoha jiných systémech je takový postup nemožný nebo přinejmenším obtížný. Například v systému Perforce toho lze bez připojení k serveru dělat jen velmi málo, v systémech Subversion a CVS můžete sice upravovat soubory, ale nemůžete zapisovat změny do databáze (neboť ta je offline). Možná to vypadá jako maličkost, ale divili byste se, jak velký je v tom rozdíl.
 
 ### Git pracuje důsledně ###
 
@@ -112,9 +112,9 @@ Oblast připravených změn je jednoduchý soubor, většinou uložený v adres�
 
 Standardní pracovní postup vypadá v systému Git následovně:
 
-1.  Změníte soubory ve svém pracovním adresáři.
-2.  Soubory připravíte k uložení tak, že vložíte jejich snímky do oblasti připravených změn.
-3.  Zapíšete revizi. Snímky souborů, uložené v oblasti připravených změn, se trvale uloží do adresáře Git.
+1. Změníte soubory ve svém pracovním adresáři.
+2. Soubory připravíte k uložení tak, že vložíte jejich snímky do oblasti připravených změn.
+3. Zapíšete revizi. Snímky souborů, uložené v oblasti připravených změn, se trvale uloží do adresáře Git.
 
 Nachází-li se konkrétní verze souboru v adresáři Git, je považována za zapsanou. Pokud je modifikovaná verze přidána do oblasti připravených změn, je považována za připravenou k zapsání. A pokud byla od poslední operace checkout změněna, ale nebyla připravena k zapsání, je považována za změněnou. O těchto stavech, způsobech jak je co nejlépe využívat nebo i o tom, jak přeskočit proces připravení souborů, se dozvíte v kapitole 2.
 
@@ -124,7 +124,7 @@ Je načase začít systém Git aktivně používat. Instalaci můžete provést 
 
 ### Instalace ze zdrojových souborů ###
 
-Pokud je to možné, je nejvhodnější instalovat Git ze zdrojových souborů. Tak je zaručeno, že vždy získáte aktuální verzi. Každá další verze systému se snaží přidat nová vylepšení uživatelského rozhraní. Použití poslední verze je tedy zpravidla tou nejlepší cestou, samozřejmě pokud vám nedělá problémy kompilace softwaru ze zdrojových souborů. Skutečností také je, že mnoho linuxových distribucí obsahuje velmi staré balíčky. Takže pokud nepoužíváte velmi čerstvou distribuci, nebo pokud záměrně používáte starší verzi, bývá instalace ze zdrojových souborů nejlepší volbou.
+Pokud je to možné, je nejvhodnější instalovat Git ze zdrojových souborů. Tak je zaručeno, že vždy získáte aktuální verzi. Každá další verze systému Git se snaží přidat nová vylepšení uživatelského rozhraní. Použití poslední verze je tedy zpravidla tou nejlepší cestou, samozřejmě pokud vám nedělá problémy kompilace softwaru ze zdrojových souborů. Skutečností také je, že mnoho linuxových distribucí obsahuje velmi staré balíčky. Takže pokud nepoužíváte velmi čerstvou distribuci, nebo pokud záměrně používáte starší verzi, bývá instalace ze zdrojových souborů nejlepší volbou.
 
 Před instalací samotného Gitu musí váš systém obsahovat následující knihovny, na nichž je Git závislý: curl, zlib, openssl, expat, a libiconv. Pokud používáte systém s nástrojem yum (například u distribuce Fedora) nebo apt-get (například distribuce odvozené od Debianu), můžete k instalaci použít jeden z následujících příkazů:
 
@@ -190,7 +190,7 @@ Poznámka k používání pod Windows: Git byste měli používat z dodaného sh
 
 ## První nastavení systému Git ##
 
-Nyní, když máte Git nainstalovaný, můžete provést některá uživatelská nastavení systému. Nastavení stačí provést pouze jednou — zůstanou zachována i po případných aktualizacích.
+Nyní, když máte Git nainstalovaný, můžete provést některá uživatelská nastavení systému. Nastavení stačí provést pouze jednou — zůstanou zachována i po případných aktualizacích. Opětovným použitím příkazů můžete nastavení kdykoliv změnit.
 
 Nastavení konfiguračních proměnných systému, které ovlivňují jak vzhled systému Git, tak ostatní aspekty jeho práce, umožňuje příkaz `git config`. Tyto proměnné mohou být uloženy na třech různých místech:
 

@@ -96,16 +96,16 @@ Podívejme se, proč byste to měli dělat také tak.
 
 Vytvořme si jednoduchý příklad větvení a slučování s pracovním postupem, který můžete využít i v reálném životě. Budete provádět tyto kroky:
 
-1.  Pracujete na webových stránkách.
-2.  Vytvoříte větev pro novou část stránek, v níž budete pracovat.
-3.  Vytvoříte práci v této větvi.
+1. Pracujete na webových stránkách.
+2. Vytvoříte větev pro novou část stránek, v níž budete pracovat.
+3. Vytvoříte práci v této větvi.
 
 V tomto okamžiku vám zavolají, že se vyskytla jiná kritická chyba, která vyžaduje rychlou opravu (hotfix). Uděláte následující:
 
-1.  Vrátíte se zpět na produkční větev.
-2.  Vytvoříte větev pro přidání hotfixu.
-3.  Po úspěšném otestování začleníte větev s hotfixem a odešlete ji do produkce.
-4.  Přepnete zpět na svou původní část a pokračujete v práci.
+1. Vrátíte se zpět na produkční větev.
+2. Vytvoříte větev pro přidání hotfixu.
+3. Po úspěšném otestování začleníte větev s hotfixem a odešlete ji do produkce.
+4. Přepnete zpět na svou původní část a pokračujete v práci.
 
 ### Základní větvení ###
 
@@ -139,7 +139,7 @@ Obrázek 3-12. Větev iss53 se s vaší prací posouvá vpřed.
 
 V tomto okamžiku vám zavolají, že se na webových stránkách vyskytl problém, který musíte okamžitě vyřešit. Jelikož pracujete v systému Git, nemusíte svou opravu vytvářet uprostřed změn, které jste provedli v části `iss53`, ani nemusíte dělat zbytečnou práci, abyste všechny tyto změny vrátili, než budete moci začít pracovat na opravě produkční verze stránek. Jediné, co teď musíte udělat, je přepnout zpět na hlavní větev.
 
-Než tak učiníte, zkontrolujte, zda nemáte v pracovním adresáři nebo v oblasti připravených změn nezapsané změny, které kolidují s větví, jejíž checkout provádíte. V takovém případě by vám Git přepnutí větví nedovolil. Při přepínání větví je ideální, pokud máte čistý pracovní stav. Existují způsoby, jak to obejít (jmenovitě odložení (stashing) a doplnění revize (commit amending)), těm se však budeme věnovat až později. Pro tuto chvíli jste zapsali všechny provedené změny a můžete přepnout zpět na hlavní větev.
+Než tak učiníte, zkontrolujte, zda nemáte v pracovním adresáři nebo v oblasti připravených změn nezapsané změny, které kolidují s větví, jejíž checkout provádíte. V takovém případě by vám Git přepnutí větví nedovolil. Při přepínání větví je ideální, pokud máte čistý pracovní stav. Existují způsoby, jak to obejít (jmenovitě odložení (stashing) a doplnění revize (commit amending)), těm se však budeme věnovat až později. Pro tuto chvíli jste zapsali všechny provedené změny a můžete přepnout zpět na hlavní větev:
 
 	$ git checkout master
 	Switched to branch 'master'
@@ -156,7 +156,7 @@ Nyní přichází na řadu hotfix. Vytvořme větev s hotfixem, v níž budeme p
 	 1 files changed, 1 deletion(-)
 
 Insert 18333fig0313.png
-Obrázek 3-13. Větev „hotfix“ začleněná zpět v místě hlavní větve
+Obrázek 3-13. Větev „hotfix“ začleněná zpět v místě hlavní větve.
 
 Můžete spustit testy, abyste se ujistili, že hotfix splňuje všechny požadavky, a pak můžete větev začlenit (merge) zpět do hlavní větve, aby byla připravena do produkce. Učiníte tak příkazem `git merge`:
 
@@ -167,7 +167,7 @@ Můžete spustit testy, abyste se ujistili, že hotfix splňuje všechny požada
 	 README | 1 -
 	 1 file changed, 1 deletion(-)
 
-Při sloučení jste si možná všimli spojení „Fast forward“ (rychle vpřed). Jelikož revize, na niž ukazovala větev, do níž jste začleňovali, byla v přímé linii s revizí, na níž jste se nacházeli, Git přesunul ukazatel vpřed. Jinými slovy: pokud se pokoušíte sloučit jednu revizi s revizí druhou, k níž lze dospět následováním historie první revize, Git proces zjednoduší a přesune ukazatel vpřed, protože neexistuje žádná rozdílná práce, kterou by bylo třeba sloučit. Tomuto postupu se říká „rychle vpřed“.
+Při sloučení jste si možná všimli spojení „Fast forward“ (rychle vpřed). Jelikož revize, na niž ukazovala větev, do níž jste začleňovali, byla v přímým předchůdcem revize, na níž jste se nacházeli, Git přesunul ukazatel vpřed. Jinými slovy: pokud se pokoušíte sloučit jednu revizi s revizí druhou, k níž lze dospět následováním historie první revize, Git proces zjednoduší a přesune ukazatel vpřed, protože neexistuje žádná rozdílná práce, kterou by bylo třeba sloučit. Tomuto postupu se říká „rychle vpřed“.
 
 Vaše změna je nyní obsažena ve snímku revize, na niž ukazuje hlavní větev `master`, a vy můžete pokračovat v provádění změn (viz obrázek 3-14).
 
@@ -235,12 +235,12 @@ Git nepřistoupil k automatickému vytvoření nové revize sloučením. Prozat�
 	On branch master
 	You have unmerged paths.
 	  (fix conflicts and run "git commit")
-
+	
 	Unmerged paths:
 	  (use "git add <file>..." to mark resolution)
-
+	
 	        both modified:      index.html
-
+	
 	no changes added to commit (use "git add" and/or "git commit -a")
 
 Vše, co při sloučení kolidovalo a nebylo vyřešeno, je označeno jako „unmerged“ (nesloučeno). Git přidává ke kolidujícím souborům standardní značky pro označení konfliktů (conflict-resolution markers), takže soubor můžete ručně otevřít a konflikty vyřešit. Jedna část vašeho souboru bude vypadat zhruba takto:
@@ -286,9 +286,9 @@ Ještě jednou můžete spustit příkaz `git status`, abyste si ověřili, že 
 	On branch master
 	Changes to be committed:
 	  (use "git reset HEAD <file>..." to unstage)
-
+	
 	        modified:   index.html
-
+	
 
 Pokud jste s výsledkem spokojeni a ujistili jste se, že všechny kolidující soubory jsou připraveny k zapsání, můžete zadat příkaz `git commit` a dokončit revizi sloučením. Zpráva revize má v takovém případě přednastavenu tuto podobu:
 
@@ -603,4 +603,4 @@ Budete-li používat přeskládání jako metodu vyčištění a práce s revize
 
 ## Shrnutí ##
 
-V této kapitole jsme se věnovali základům větvení a slučování. Neměli byste teď mít problém s vytvářením větví, přepínáním na nové i existující větve ani se slučováním lokálních větví. Měli byste také umět odeslat své větve ke sdílení na server, spolupracovat s ostatními na sdílených větvích a před odesláním větve přeskládat.
+V této kapitole jsme se věnovali základům větvení a slučování. Neměli byste teď mít problém s vytvářením větví, přepínáním na nové i existující větve ani se slučováním lokálních větví.  Měli byste také umět odeslat své větve ke sdílení na server, spolupracovat s ostatními na sdílených větvích a před odesláním větve přeskládat.

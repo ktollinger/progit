@@ -113,7 +113,7 @@ Git na přání automaticky barevně zvýrazňuje většinu svých výstupů. Lz
 
 	$ git config --global color.ui true
 
-Je-li tato hodnota nastavena, Git barevně zvýrazní výstup přicházející na terminál. Dalšími možnostmi nastavení jsou false, které výstup nevybarví nikdy, a always, které použije barvy pokaždé, a to i když jste přesměrovali příkazy Git do souboru nebo k jinému příkazu. Toto nastavení bylo přidáno ve verzi systému Git 1.5.5. Máte-li starší verzi, budete muset zadat veškerá barevná nastavení individuálně.
+Je-li tato hodnota nastavena, Git barevně zvýrazní výstup přicházející na terminál. Dalšími možnostmi nastavení jsou false, které výstup nevybarví nikdy, a always, které použije barvy pokaždé, a to i když jste přesměrovali příkazy Git do souboru nebo k jinému příkazu.
 
 Možnost `color.ui = always` využijete zřídka. Chcete-li použít barevné kódy v přesměrovaném výstupu, můžete většinou místo toho přidat k příkazu Git příznak `--color`. Po jeho zadání příkaz použije barevné kódy. Téměř vždy vystačíte s příkazem `color.ui = true`.
 
@@ -136,7 +136,7 @@ Chcete-li použít dílčí nastavení, podrobnější informace naleznete na ma
 
 ### Externí nástroje pro diff a slučování ###
 
-Ačkoli Git disponuje vlastním nástrojem diff, který jste dosud používali, můžete místo něj nastavit i libovolný externí nástroj. Stejně tak můžete nastavit vlastní grafický nástroj k řešení konfliktů při slučování, nechcete-li řešit konflikty ručně. Já na tomto místě ukážu, jak nastavit Perforce Visual Merge Tool (P4Merge), protože se jedná o příjemný grafický nástroj pro řešení konfliktů a práci s výstupy nástroje diff. P4Merge je navíc dostupný zdarma.
+Ačkoli Git disponuje vlastním nástrojem diff, který jste dosud používali, můžete místo něj nastavit i libovolný externí nástroj. Stejně tak můžete nastavit vlastní grafický nástroj k řešení konfliktů při slučování, nechcete-li řešit konflikty ručně. Já na tomto místě ukážu, jak můžete pro zobrazení rozdílů a řešení konfliktů využít nástroj Perforce Visual Merge Tool (P4Merge). Jde o šikovný grafický nástroj a je dostupný zdarma.
 
 Pokud ho chcete vyzkoušet, nemělo by vám v tom nic bránit, P4Merge funguje na všech hlavních platformách. V příkladech budu používat označení cest platné pro systémy Mac a Linux; pro systémy Windows budete muset cestu `/usr/local/bin` nahradit cestou ke spustitelnému souboru ve vašem prostředí.
 
@@ -220,13 +220,13 @@ Git může tento problém vyřešit automatickou konverzí konců řádků CRLF 
 
 	$ git config --global core.autocrlf true
 
-Jestliže pracujete v systému Linux nebo Mac, který používá konce řádků LF, nebudete chtít, aby Git při checkoutu souborů automaticky konvertoval konce řádků. Pokud se však náhodou vyskytne soubor s konci řádků CRLF, budete chtít, aby Git tento problém vyřešil. Systému Git tak můžete zadat, aby při zapisování souborů konvertoval znaky CRLF na LF, avšak nikoli obráceně. Nastavte možnost `core.autocrlf` na hodnotu input:
+Jestliže pracujete v systému Linux nebo Mac, který používá konce řádků LF, nebudete chtít, aby Git při checkoutu souborů automaticky konvertoval konce řádků. Pokud se však náhodou vyskytne soubor s konci řádků CRLF, budete chtít, aby Git tento problém vyřešil. Systému Git tak můžete zadat, aby převáděl posloupnosti CRLF na LF (avšak nikoli obráceně) nastavením `core.autocrlf` na hodnotu input:
 
 	$ git config --global core.autocrlf input
 
 Toto nastavení by vám mělo pomoci zachovat zakončení CRLF při checkoutu v systému Windows a zakončení LF v systémech Mac a Linux a v repozitářích.
 
-Pokud programujete ve Windows a vytváříte projekt pouze pro Windows, můžete tuto funkci vypnout. Nastavíte-li hodnotu konfigurace na `false`, v repozitáři se budou zaznamenávat i návraty vozíku.
+Pokud programujete ve Windows a vytváříte projekt pouze pro Windows, můžete tuto funkci vypnout. Nastavíte-li hodnotu konfigurace na `false`, v repozitáři se budou zaznamenávat i znaky CR.
 
 	$ git config --global core.autocrlf false
 
@@ -553,7 +553,7 @@ Stejně jako jiné systémy správy verzí přistupuje i Git k tomu, že spoušt
 
 ### Instalace zásuvného modulu ###
 
-Všechny zásuvné moduly jsou uloženy v podadresáři `hooks` adresáře Git. U většiny projektů to bude konkrétně `.git/hooks`. Git do tohoto adresáře standardně ukládá několik ukázkových skriptů, které jsou často užitečné nejen samy o sobě, ale navíc dokumentují vstupní hodnoty všech skriptů. Všechny zdejší příklady jsou napsány jako shellové skripty, tu a tam obsahující Perl, avšak všechny řádně pojmenované spustitelné skripty budou fungovat správně – můžete je napsat v Ruby, Pythonu nebo jiném jazyce. U verzí systému Git vyšších než 1.6 končí tyto soubory ukázkových zásuvných modulů na .sample, budete je muset přejmenovat. U verzí systému Git před 1.6 jsou tyto ukázkové soubory pojmenovány správně, ale nejsou spustitelné.
+Všechny zásuvné moduly jsou uloženy v podadresáři `hooks` adresáře Git. U většiny projektů to bude konkrétně `.git/hooks`. Git do tohoto adresáře standardně ukládá několik ukázkových skriptů, které jsou často užitečné nejen samy o sobě, ale navíc dokumentují vstupní hodnoty všech skriptů. Všechny zdejší příklady jsou napsány jako shellové skripty, tu a tam obsahující Perl, avšak všechny řádně pojmenované spustitelné skripty budou fungovat správně – můžete je napsat v Ruby, Pythonu nebo jiném jazyce. Ukázkové soubory zásuvných modulů končí příponou .sample, budete je muset přejmenovat.
 
 Chcete-li aktivovat skript zásuvného modulu, vložte správně pojmenovaný a spustitelný soubor do podadresáře `hooks` adresáře Git. Od tohoto okamžiku by měl být skript volán. V dalších částech se budeme věnovat většině nejvýznamnějších názvů souborů zásuvných modulů.
 
@@ -563,9 +563,9 @@ Na straně klienta existuje mnoho zásuvných modulů. V této části je rozdě
 
 #### Zásuvné moduly k zapisování revizí ####
 
-První čtyři zásuvné moduly se týkají zapisování revizí. Zásuvný modul `pre-commit` se spouští jako první, ještě než začnete psát zprávu k revizi. Slouží ke kontrole snímku, který hodláte zapsat. Může zjišťovat, zda jste na něco nezapomněli, spouštět kontrolní testy nebo prověřovat cokoli jiného, co potřebujete ve zdrojovém kódu zkontrolovat. Je-li výstup tohoto zásuvného modulu nenulový, zapisování bude přerušeno. Tomu se dá předejít zadáním příkazu `git commit --no-verify`. Můžete kontrolovat záležitosti jako styl kódu (spustit lint apod.), koncové mezery (výchozí zásuvný modul dělá právě toto) nebo správnou dokumentaci k novým metodám.
+První čtyři zásuvné moduly se týkají zapisování revizí. Zásuvný modul `pre-commit` se spouští jako první, ještě než začnete psát zprávu k revizi. Slouží ke kontrole snímku, který hodláte zapsat. Může zjišťovat, zda jste na něco nezapomněli, spouštět kontrolní testy nebo prověřovat cokoli jiného, co potřebujete ve zdrojovém kódu zkontrolovat. Je-li výstup tohoto zásuvného modulu nenulový, zapisování bude přerušeno. Ale můžete to obejít zadáním příkazu `git commit --no-verify`. Můžete kontrolovat záležitosti jako styl kódu (spustit lint apod.), koncové mezery (výchozí zásuvný modul dělá právě toto) nebo správnou dokumentaci k novým metodám.
 
-Zásuvný modul `prepare-commit-msg` se spouští ještě předtím, než se otevře editor pro vytvoření zprávy k revizi, ale poté, co byla vytvořena výchozí zpráva. Umožňuje upravit výchozí zprávu dřív, než se zobrazí autorovi revize. Tento zásuvný modul vyžaduje některá nastavení: cestu k souboru, v němž je zpráva k revizi uložena, typ revize, a jedná-li se o doplněnou revizi, také SHA-1 revize. Tento zásuvný modul většinou není pro normální revize využitelný. Hodí se spíše pro revize, u nichž je výchozí zpráva generována automaticky, např. zprávy k revizím ze šablony, revize sloučením, komprimované revize a doplněné revize. Zásuvný modul můžete v kombinaci se šablonou revize využívat k programovému vložení informací.
+Zásuvný modul `prepare-commit-msg` se spouští ještě předtím, než se otevře editor pro vytvoření zprávy k revizi, ale poté, co byla vytvořena výchozí zpráva. Umožňuje upravit výchozí zprávu dřív, než se zobrazí autorovi revize. Tento zásuvný modul vyžaduje některá nastavení: cestu k souboru, v němž je zpráva k revizi uložena, typ revize, a jedná-li se o doplněnou revizi, také SHA-1 revize. Tento zásuvný modul většinou není pro normální revize využitelný. Hodí se spíše pro revize, u nichž je výchozí zpráva generována automaticky, např. zprávy k revizím ze šablony, revize sloučením, komprimované revize a doplněné revize. Zásuvný modul můžete v kombinaci se šablonou revize využívat k vložení informací programem.
 
 Zásuvný modul `commit-msg` používá jeden parametr, jímž je cesta k dočasnému souboru obsahujícímu aktuální zprávu k revizi. Je-li návratová hodnota skriptu nenulová, Git přeruší proces zapisování. Skript tak můžete používat k validaci stavu projektu nebo zprávy k revizi, než dovolíte, aby byla revize zapsána. V poslední části této kapitoly ukážeme, jak lze pomocí tohoto zásuvného modulu zkontrolovat, že zpráva k revizi odpovídá požadovanému vzoru.
 
@@ -937,4 +937,4 @@ Největší nevýhodou tohoto postupu je, že může být velmi pomalý a není 
 
 ## Shrnutí ##
 
-V sedmé kapitole jste se naučili základní způsoby, jak přizpůsobit klienta a server systému Git tak, aby nejlépe odpovídali potřebám vašeho pracovního postupu a vašich projektů. Poznali jste všechny druhy konfiguračního nastavení, atributy nastavované pomocí souborů a dokonce i zásuvné moduly. V neposlední řadě jste sestavili exemplární server, který si sám dokáže vynutit vámi předepsané standardy. Nyní byste měli systém Git bez potíží nastavit téměř na jakýkoli pracovní postup, který si vysníte.
+Už jsme se seznámili s většinou hlavních způsobů přizpůsobení klienta a serveru systému Git tak, aby co nejlépe odpovídali potřebám vašeho pracovního postupu a vašich projektů. Poznali jste všechny druhy konfiguračního nastavení, atributy nastavované pomocí souborů a dokonce i zásuvné moduly. V neposlední řadě jste sestavili ukázkový server, který si sám dokáže vynutit vámi předepsané standardy. Nyní byste měli systém Git bez potíží nastavit téměř na jakýkoli pracovní postup, který si vysníte.

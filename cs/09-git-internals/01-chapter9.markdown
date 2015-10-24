@@ -1,10 +1,10 @@
 # Git pod pokličkou #
 
-Ať už jste do této kapitoly přeskočili z některé z předchozích, nebo jste se sem pročetli napříč celou knihou, v této kapitole se dozvíte něco o vnitřním fungování a implementaci systému Git. Osobně se domnívám, že je tato informace velmi důležitá, aby uživatel pochopil, jak užitečný a výkonný je systém Git. Ostatní mi však oponovali, že pro začátečníky mohou být tyto informace matoucí a zbytečně složité. Proto jsem tyto úvahy shrnul do poslední kapitoly knihy, kterou si můžete přečíst v libovolné fázi seznamování se systémem Git. Vhodný okamžik záleží jen na vás.
+Ať už jste do této kapitoly přeskočili z některé z předchozích, nebo jste se sem pročetli napříč celou knihou, v této kapitole se dozvíte něco o vnitřním fungování a implementaci systému Git. Osobně se domnívám, že je tato informace velmi důležitá, aby uživatel pochopil, jak užitečný a výkonný je systém Git. Ostatní mi však oponovali, že pro začátečníky mohou být tyto informace matoucí a zbytečně složité. Proto jsem tyto úvahy shrnul do poslední kapitoly knihy, kterou si můžete přečíst v libovolné fázi seznamování se systémem Git. Rozhodnutí nechávám na vás.
 
 Nyní se však už pusťme do práce. Pokud tato informace ještě nezazněla dostatečně jasně, můžeme začít konstatováním, že Git je ve své podstatě obsahově adresovatelný systém souborů s uživatelským rozhraním VCS na svém vrcholu. Tomu, co tato definice znamená, se budeme věnovat za chvíli.
 
-V dávných dobách (zhruba do verze 1.5) bývalo uživatelské rozhraní systému Git podstatně složitější než dnes. Git tehdy spíš než na uhlazené VCS kladl důraz právě na systém souborů. Uživatelské rozhraní však bylo za několik posledních let zkultivováno a dnes je už velmi čisté a uživatelsky příjemné. Ani v tomto ohledu se tak už Git nemusí obávat srovnání s ostatními systémy, navzdory tomu, že přetrvávající předsudky z raných dob hodnotí jeho uživatelské prostředí jako komplikované a náročné na pochopení.
+V dávných dobách (zhruba do verze 1.5) bývalo uživatelské rozhraní systému Git podstatně složitější než dnes. Git tehdy spíš než na uhlazené VCS kladl důraz právě na systém souborů. Uživatelské rozhraní však bylo za několik posledních let zkultivováno a dnes je už stejně čisté a uživatelsky příjemné jako u ostatních systémů. Přesto přetrvávají předsudky z raných dob a uživatelské rozhraní systému Git se považuje za složité a náročné na pochopení.
 
 Na systému Git je skvělý jeho obsahově adresovatelný systém souborů, a proto se v této kapitole zaměřím nejprve na něj. Poté se podíváme na mechanismy přenosu a úkony správy repozitářů, s nimiž se můžete jednou setkat.
 
@@ -34,7 +34,7 @@ Zbývají čtyři důležité položky: soubory `HEAD` a `index` a adresáře `o
 ## Objekty Git ##
 
 Git je obsahově adresovatelný systém souborů. Výborně. A co to znamená?
-Znamená to, že v jádru systému Git se nachází jednoduché úložiště dat, ke kterému lze přistupovat pomocí klíčů. Můžete do něj vložit jakýkoli obsah a na oplátku dostanete klíč, který můžete kdykoli v budoucnu použít k vyzvednutí obsahu. Můžete tak použít například nízkoúrovňový příkaz `hash-object`, který vezme určitá data, uloží je v adresáři `.git` a dá vám klíč, pod nímž jsou tato data uložena. Vytvořme nejprve nový repozitář Git. Můžeme se přesvědčit, že je adresář `objects` prázdný:
+Znamená to, že v jádru systému Git se nachází jednoduché úložiště dat, ke kterému lze přistupovat pomocí klíčů. Můžete do něj vložit jakýkoli obsah a na oplátku dostanete klíč, který můžete kdykoli v budoucnu použít k vyzvednutí obsahu. Abychom to předvedli, můžete použít nízkoúrovňový příkaz `hash-object`, který vezme určitá data, uloží je v adresáři `.git` a vrátí vám klíč, pod nímž jsou tato data uložena. Vytvořme nejprve nový repozitář Git. Můžeme se přesvědčit, že je adresář `objects` prázdný:
 
 	$ mkdir test
 	$ cd test
@@ -102,7 +102,7 @@ Pamatovat si klíč SHA-1 každé verze souboru ale není praktické, navíc v s
 
 ### Objekty stromu ###
 
-Dalším typem objektu, na který se podíváme, je objekt stromu (tree object), jenž řeší problém ukládání názvu souboru a zároveň umožňuje uložit skupinu souborů dohromady. Git ukládá obsah podobným způsobem jako systém souborů UNIX, jen trochu jednodušeji. Veškerý obsah se ukládá v podobě blobů a objektů stromu. Stromy odpovídají položkám v adresáři UNIX a bloby víceméně odpovídají inodům neboli obsahům souborů. Jeden objekt stromu obsahuje jednu nebo více položek stromu, z nichž každá obsahuje ukazatel SHA-1 na blob nebo podstrom s asociovaným režimem, typem a názvem souboru. Nejnovější strom v projektu „simplegit“ může vypadat například takto:
+Dalším typem objektu, na který se podíváme, je objekt stromu (tree object), jenž řeší problém ukládání názvu souboru a zároveň umožňuje uložit skupinu souborů dohromady. Git ukládá obsah podobným způsobem jako systém souborů UNIX, jen trochu jednodušeji. Veškerý obsah se ukládá v podobě objektů typu strom a blob. Stromy odpovídají položkám v adresáři UNIX a bloby víceméně odpovídají i-uzlům nebo obsahům souborů. Jeden objekt stromu obsahuje jednu nebo více položek stromu, z nichž každá obsahuje ukazatel SHA-1 na blob nebo podstrom s asociovaným režimem, typem a názvem souboru. Nejnovější strom v projektu „simplegit“ může vypadat například takto:
 
 	$ git cat-file -p master^{tree}
 	100644 blob a906cb2a4a904a152e80877d4088654daad0c859      README
@@ -501,7 +501,7 @@ Podíváte-li se do adresáře s objekty, zjistíte, že většina objektů zmiz
 
 Objekty, které zůstaly, jsou bloby, na něž neukazuje žádná revize, v našem případě bloby z příkladů „what is up, doc?“ a „test content“, které jsme vytvořili před časem. Jelikož jste je nikdy nevložili do žádné z revizí, Git je považuje za volné a nezabalil je do nového balíčkového souboru.
 
-Ostatní soubory jsou v novém balíčkovém souboru a indexu. Balíčkový soubor je jediný soubor, v němž je zabalen obsah všech objektů odstraněných ze systému souborů. Index je soubor, který obsahuje ofsety do tohoto balíčkového souboru, díky nimž lze rychle vyhledat konkrétní objekt. Hlavní předností balíčkového souboru je jeho velikost. Přestože objekty na disku zabíraly před spuštěním příkazu `gc` celkem asi 12 kB, nový soubor má pouze 6 kB. Zabalením objektů jste zredukovali nároky na místo na polovinu.
+Ostatní soubory jsou v novém balíčkovém souboru a indexu. Balíčkový soubor je jediný soubor, v němž je zabalen obsah všech objektů odstraněných ze systému souborů. Index je soubor, který obsahuje ofsety do tohoto balíčkového souboru, díky nimž lze rychle vyhledat konkrétní objekt. Hlavní předností balíčkového souboru je jeho velikost. Přestože objekty na disku zabíraly před spuštěním příkazu `gc` celkem asi 8 kB, nový soubor má pouze 4 kB. Zabalením objektů jste zredukovali nároky na místo na polovinu.
 
 Jak to Git dělá? Při balení objektů vyhledá Git soubory, které mají podobný název a podobnou velikost, a uloží pouze rozdíly mezi jednotlivými verzemi souboru. Do balíčkového souboru můžete ostatně nahlédnout a přesvědčit se, čím Git ušetřil místo. Nízkoúrovňový příkaz `git verify-pack` umožňuje prohlížet, co bylo zabaleno:
 
@@ -534,7 +534,7 @@ Na celém balíčku je navíc příjemné, že ho můžete kdykoli znovu zabalit
 
 ## Refspec ##
 
-V celé této knize jsme používali jednoduché mapování ze vzdálených větví do lokálních referencí. Mapování však může být i komplexnější.
+V celé této knize jsme používali jednoduché mapování ze vzdálených větví do lokálních referencí. Mapování však může být i složitější.
 Řekněme, že přidáte například tento vzdálený repozitář:
 
 	$ git remote add origin git@github.com:schacon/simplegit-progit.git
@@ -728,7 +728,7 @@ Nyní, když zná proces `send-pack` stav serveru, určí, jaké revize má, kte
 
 Hodnota SHA-1 ze samých nul znamená, že na tomto místě předtím nic nebylo, protože přidáváte větev „experiment“. Pokud byste mazali referenci, viděli byste pravý opak: samé nuly na pravé straně.
 
-Git odešle jeden řádek pro každou referenci, kterou aktualizujete. Řádek obsahuje starou hodnotu SHA, novou hodnotu SHA a referenci, která je aktualizována. První řádek navíc obsahuje schopnosti klienta. Jako další krok nahraje klient balíčkový soubor se všemi třemi objekty, které na serveru dosud nejsou. Na závěr procesu server oznámí, zda se akce zdařila, nebo nezdařila:
+Git odešle jeden řádek pro každou referenci, kterou aktualizujete. Řádek obsahuje starou hodnotu SHA, novou hodnotu SHA a referenci, která je aktualizována. První řádek navíc popisuje schopnosti klienta. Jako další krok nahraje klient balíčkový soubor se všemi třemi objekty, které na serveru dosud nejsou. Na závěr procesu server oznámí, zda se akce zdařila, nebo nezdařila:
 
 	000Aunpack ok
 
@@ -756,7 +756,7 @@ V obou případech zašle po připojení procesu `fetch-pack` proces `upload-pac
 
 Informace se nápadně podobají těm, jimiž odpovídá proces `receive-pack`, liší se však schopnosti. Kromě toho pošle proces zpět referenci HEAD, aby klient v případě, že se jedná o klonování, věděl, kam přepnout.
 
-V tomto okamžiku proces `fetch-pack` zjistí, jaké objekty má, a vytvoří odpověď s objekty, které potřebuje. Odpověď má tvar „want“ (chci) a SHA požadovaných objektů. Naopak objekty, které už vlastní, uvádí kombinací výrazu „have“ (mám) a hodnoty SHA. Výpis je ukončen výrazem „done“, který iniciuje odeslání požadovaného balíčkového souboru nebo dat procesem `upload-pack`:
+V tomto okamžiku proces `fetch-pack` zjistí, jaké objekty má, a vytvoří odpověď s objekty, které potřebuje. Odpověď má tvar „want“ (chci) a SHA požadovaných objektů. Objekty, které už vlastní, uvádí kombinací výrazu „have“ (mám) a hodnoty SHA. Výpis je ukončen výrazem „done“, který iniciuje odeslání požadovaného balíčkového souboru nebo dat procesem `upload-pack`:
 
 	0054want ca82a6dff817ec66f44342007202690a93763949 ofs-delta
 	0032have 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
@@ -823,15 +823,15 @@ Nyní vrátíme větev `master` zpět na prostřední revizi:
 	cac0cab538b970a37ea1e769cbbde608743bc96d second commit
 	fdf4fc3344e67ab068f836878b6c4951e3b15f3d first commit
 
-Účinně jsme se zbavili horních dvou revizí. Neexistuje žádná větev, z níž by byly tyto revize dostupné. Budete muset najít hodnotu SHA nejnovější revize a přidat větev, která na ni bude ukazovat. Problém tedy spočívá v určení hodnoty SHA nejnovější revize, protože nepředpokládáme, že si ji pamatujete.
+Účinně jsme se zbavili horních dvou revizí. Neexistuje žádná větev, z níž by byly tyto revize dostupné. Budete muset najít hodnotu SHA nejnovější revize a přidat větev, která na ni bude ukazovat. Trik spočívá v určení hodnoty SHA nejnovější revize, protože nepředpokládáme, že si ji pamatujete.
 
-Nejrychlejší cestou často bývá použít nástroj `git reflog`. Git během vaší práce v tichosti zaznamenává, kde se nachází ukazatel HEAD (pokaždé, když se změní jeho pozice). Vždy když zapíšete revizi nebo změníte větve, je reflog aktualizován. Reflog se také aktualizuje s každým spuštěním příkazu `git update-ref` – o důvod víc používat tento příkaz a nezapisovat hodnotu SHA přímo do souborů referencí, jak už jsme uváděli v části „Reference Git“ v této kapitole. Spuštěním příkazu `git reflog` zjistíte, kde jste se nacházeli v libovolném okamžiku:
+Nejrychlejší cestou často bývá použít nástroj `git reflog`. Git během vaší práce v tichosti zaznamenává, kde se nachází ukazatel HEAD (pokaždé, když se změní jeho pozice). Vždy když zapíšete revizi nebo změníte větve, je reflog aktualizován. Reflog se také aktualizuje s každým spuštěním příkazu `git update-ref` – o důvod víc používat tento příkaz a nezapisovat hodnotu SHA přímo do souborů referencí, jak už jsme uváděli v části „Reference Git“ v této kapitole.  Spuštěním příkazu `git reflog` zjistíte, kde jste se nacházeli v libovolném okamžiku:
 
 	$ git reflog
 	1a410ef HEAD@{0}: 1a410efbd13591db07496601ebc7a059dd55cfe9: updating HEAD
 	ab1afef HEAD@{1}: ab1afef80fac8e34258ff41fc1b867c702daa24b: updating HEAD
 
-Vidíme tu obě revize, jichž jsme se zbavili, ale není tu k nim mnoho informací. Chcete-li zobrazit stejné informace v užitečnějším formátu, můžete spustit příkaz `git log -g`, jímž získáte normální výstup příkazu log pro reflog.
+Vidíme tu obě revize, jichž jsme se zbavili, ale není tu k nim mnoho informací.  Chcete-li zobrazit stejné informace v užitečnějším formátu, můžete spustit příkaz `git log -g`, jímž získáte normální výstup příkazu log pro reflog.
 
 	$ git log -g
 	commit 1a410efbd13591db07496601ebc7a059dd55cfe9
@@ -878,11 +878,11 @@ V tomto případě je vaše ztracená revize uvedena výrazem „dangling commit
 
 ### Odstraňování objektů ###
 
-Systém Git nabízí velké množství úžasných funkcí a možností. Je však jedna věc, která vám může způsobovat problém. Je jí fakt, že příkaz `git clone` stáhne vždy celou historii projektu, všechny verze všech souborů.
+Systém Git nabízí velké množství úžasných funkcí a možností. Je však jedna věc, která vám může způsobovat problém. Je jí fakt, že příkaz `git clone` stáhne vždy celou historii projektu, všechny verze všech souborů. Je však jedna věc, která vám může způsobovat problém. Je jí fakt, že příkaz `git clone` stáhne vždy celou historii projektu, všechny verze všech souborů. 
 
-To je v pořádku, je-li projektem zdrojový kód, neboť Git je vysoce optimalizován ke kompresi těchto dat. Pokud však někdo v kterémkoli místě historie projektu přidal jeden obrovský soubor, bude se stahovat při každém dalším klonování repozitáře. Nic na tom nezmění, ani pokud tento velký soubor hned v příští revizi z projektu odstraníte. Protože se nachází v historii, stále bude součástí všech klonů. To může způsobovat velké problémy, pokud konvertujete repozitáře Subversion nebo Perforce do systému Git. Protože v těchto systémech nestahujete celou historii, nebývá s vkládáním velkých souborů problém. Pokud provedete import do systému Git z jiného systému nebo jiným způsobem, zjistíte, že je váš repozitář výrazně větší, než by měl být. Nabízím návod, jak vyhledat a odstranit velké objekty.
+To může způsobovat velké problémy, pokud konvertujete repozitáře Subversion nebo Perforce do systému Git. Protože v těchto systémech nestahujete celou historii, nebývá s vkládáním velkých souborů problém. Pokud provedete import do systému Git z jiného systému, nebo jiným způsobem zjistíte, že je váš repozitář výrazně větší, než by měl být, můžete vyhledat a odstranit velké objekty následovně.
 
-Dejte však pozor, tento postup může být pro vaši historii revizí katastrofický. Přepíše všechny objekty revizí směrem dolů od nejstaršího stromu, který musíte pro odstranění reference na velký soubor upravit. Pokud po této metodě sáhnete hned po importu, než mohl kdokoli založit na revizi svou práci, nemusíte se ničeho obávat. V opačném případě budete muset upozornit všechny přispěvatele, že musí přeskládat svou práci na vaše nové revize.
+Ale upozorňuji, že tento postup porušuje historii vašich revizí. Přepisují se všechny objekty revizí nacházejících se dál od vašeho nejstaršího objektu stromu, který musíte při odstraňování odkazu na velký soubor upravovat. Pokud po této metodě sáhnete hned po importu, než mohl kdokoli založit na revizi svou práci, nemusíte se ničeho obávat. V opačném případě budete muset upozornit všechny přispěvatele, že musí přeskládat svou práci na vaše nové revize.
 
 Vyzkoušíme to na situaci, kdy do svého testovacího repozitáře vložíte velký soubor, v následující revizi ho odstraníte, vyhledáte ho a trvale ho z repozitáře odstraníte. Nejprve do historie přidejte velký objekt:
 
@@ -950,7 +950,7 @@ Chcete-li tento soubor kompletně odstranit z historie Git, budete muset přepsa
 	Rewrite da3f30d019005479c99eb4c3406225613985a1db (2/2)
 	Ref 'refs/heads/master' was rewritten
 
-Parametr `--index-filter` je podobný parametru `--tree-filter`, který jsme používali v kapitole 6, jen s tím rozdílem, že příkazem nezměníte soubory načtené na disku, ale oblast připravených změn nebo-li index. Nepomůže odstranit konkrétní soubor příkazem `rm file` nebo podobným. Odstraňte ho raději příkazem `git rm --cached` – soubor musíte odstranit z indexu, ne z disku. Důvodem je rychlost. Git nemusí před spuštěním filtru provádět checkout každé jednotlivé revize na disk a celý proces je tak mnohem, mnohem rychlejší. Pokud chcete, můžete provést stejný úkon i pomocí parametru `--tree-filter`. Zadáte-li k příkazu `git rm` parametr `--ignore-unmatch`, nařídíte systému Git, aby nepovažoval za chybu, jestliže nenajde vzor, který se snažíte odstranit. A konečně požádáte příkaz `filter-branch`, aby přepsal historii až od revize `6df7640` dále, neboť víte, že tady problém začíná. Bez této konkretizace začne proces od začátku a bude trvat zbytečně dlouho.
+Parametr `--index-filter` je podobný parametru `--tree-filter`, který jsme používali v kapitole 6, jen s tím rozdílem, že příkazem nezměníte soubory načtené na disku, ale oblast připravených změn, čili index. Nepomůže odstranit konkrétní soubor příkazem `rm file` nebo podobným. Odstraňte ho raději příkazem `git rm --cached` – soubor musíte odstranit z indexu, ne z disku. Důvodem je rychlost. Git nemusí před spuštěním filtru provádět checkout každé jednotlivé revize na disk a celý proces je tak mnohem, mnohem rychlejší. Pokud chcete, můžete provést stejný úkon i pomocí parametru `--tree-filter`. Zadáte-li k příkazu `git rm` parametr `--ignore-unmatch`, nařídíte systému Git, aby nepovažoval za chybu, jestliže nenajde vzor, který se snažíte odstranit. A konečně požádáte příkaz `filter-branch`, aby přepsal historii až od revize `6df7640` dále, neboť víte, že tady problém začíná. Bez této konkretizace začne proces od začátku a bude trvat zbytečně dlouho.
 
 Vaše historie už neobsahuje referenci na problémový soubor. Obsahuje ho však stále ještě reflog a v adresáři `.git/refs/original` také nová sada referencí, které Git přidal při spuštění příkazu `filter-branch`. Budete je proto muset odstranit a databázi znovu zabalit. Před novým zabalením je třeba odstranit vše, co na tyto staré revize ukazuje:
 
@@ -978,43 +978,6 @@ Velikost zabaleného repozitáře byla zredukována na 7 kB, což je jistě lep�
 
 ## Shrnutí ##
 
-Jak doufám, udělali jste si v této kapitole názorný obrázek o tom, jak Git pracuje v pozadí, a do určité míry také o jeho implementaci Seznámili jsme se s celou řadou nízkoúrovňových příkazů, tj. takových, které jsou na nižší úrovni a jsou jednodušší než „vysokoúrovňové příkazy“, jimiž jsme se zabývali ve všech předchozích kapitolách. Poznání, jak Git pracuje na nižší úrovni, by vám mělo pomoci pochopit, proč dělá to, co dělá, a zároveň by vám mělo umožnit napsat vlastní nástroje a podpůrné skripty, pomocí nichž budete moci automatizovat zvolený pracovní postup.
+Jak doufám, udělali jste si v této kapitole názorný obrázek o tom, jak Git pracuje v pozadí, a do určité míry také o jeho implementaci.  Seznámili jsme se s celou řadou nízkoúrovňových příkazů, tj. takových, které jsou na nižší úrovni a jsou jednodušší než „vysokoúrovňové příkazy“, jimiž jsme se zabývali ve všech předchozích kapitolách. Poznání, jak Git pracuje na nižší úrovni, by vám mělo pomoci pochopit, proč dělá to, co dělá, a zároveň by vám mělo umožnit napsat vlastní nástroje a podpůrné skripty, pomocí nichž budete moci automatizovat zvolený pracovní postup.
 
 Git jakožto obsahově adresovatelný systém souborů je velmi výkonným nástrojem, který snadno využijete i k jiným účelům než jako pouhý systém VCS. Jsem přesvědčen, že vám nově nabyté znalosti interních principů systému Git pomohou implementovat vlastní užitečné aplikace této technologie a že se i v pokročilých funkcích systému Git budete cítit příjemněji.
-
-## Poznámky k překladu ##
-
-Tento český překlad naleznete v elektronické podobě na http://git-scm.com/book. Jeho zdrojové texty jsou spolu s texty originálu a se zdrojovými texty překladů do ostatních jazyků dostupné na GitHub (https://github.com/progit/progit).
-
-### Historie překladu na GitHub ###
-
-První kroky k překladu Pro Git ve výše zmíněném GitHub projektu pocházejí z klávesnice Jana Matějky ml. (alias Mosquitoe):
-
-    Author: Jan Matějka ml. aka Mosquitoe <...@gmail.com>  2009-08-21 12:15:41
-    Committer: Jan Matějka ml. aka Mosquitoe <...@gmail.com>  2009-08-21 12:15:41
-    ...
-    Branches: master, remotes/origin/master
-    Follows:
-    Precedes:
-
-        [cs] Initial commit of the Czech version
-
-Vzhledem k následujícím skutečnostem překladu zanechal...
-
-### První kompletní překlad z Edice CZ.NIC ###
-
-Z iniciativy sdružení CZ.NIC byl financován překlad celé knihy, která vyšla jako druhá kniha Edice CZ.NIC v roce 2009, (ISBN: 978-80-904248-1-4). Můžete si ji objednat v tištěné podobě -- viz http://knihy.nic.cz/. Je zde dostupná i volně, v podobě PDF souboru. V předmluvě najdete popis motivace k překladu. Na zadním přebalu knihy naleznete také následující souhrnné informace o autorovi, o knize a o Edici CZ.NIC...
-
-**O autorovi:** Scott Chacon je popularizátorem systému správy verzí Git a pracuje také jako vývojář v Ruby na projektu GitHub.com. Ten umožňuje hosting, sdílení a kooperaci při vývoji kódu v systému Git. Scott je autorem dokumentu Git Internals Peepcode PDF, správcem domovské stránky Git a online knihy Git Community Book. O Gitu přednášel například na konferencích RailsConf, RubyConf, Scotland on Rails, Ruby Kaigi nebo OSCON. Pořádá také školení systému Git pro firmy.
-
-**O knize:** Git je distribuovaný systém pro správu verzí, který se používá zejména při vývoji svobodného a open source softwaru. Git si klade za cíl být rychlým a efektivním nástrojem pro správu verzí. V knize se čtenář seznámí jak se stát rychlým a efektivním při jeho používání. Seznámí se nejen s principy používání, ale také s detaily jak Git funguje interně nebo s možnostmi, které nabízejí některé další doplňkové nástroje.
-
-**O edici:** Edice CZ.NIC je jedním z osvětových projektů správce české domény nejvyšší úrovně. Cílem tohoto projektu je vydávat odborné, ale i populární publikace spojené s internetem a jeho technologiemi. Kromě tištěných verzí vychází v této edici současně i elektronická podoba knih. Ty je možné najít na stránkách knihy.nic.cz
-
-### Zpětná synchronizace s originálem ###
-
-Vzhledem k licenci dokumentu (Attribution-NonCommercial-ShareAlike 3.0 United States (CC BY-NC-SA 3.0)) se nabízí možnost českého překladu vydaného v Edici CZ.NIC dále nekomerčně využít.
-
-V říjnu 2012 zahájil Petr Přikryl převod výše zmíněného PDF do podoby textového souboru využívajícího syntaxe *markdown* (viz https://github.com/pepr/progitCZ/). Prvotním cílem bylo dostat úplný, kvalitní český překlad přímo na server http://git-scm.com/. Druhým cílem byla synchronizace s originálem a doplnění oprav a úprav, které se od doby vydání překladu v Edici CZ.NIC objevily. Třetí cíl vyplývá z prvního a druhého: učinit text překladu živým a dostupným všem, kteří jej budou chtít upravovat a vylepšovat.
-
-Obsah PDF souboru byl nejdříve vyexportován jako text ("Uložit jako - Text..."). Poté byly pro ten účel vytvořenými pythonovskými skripty extrahovány prvky dokumentu (nadpisy, odstavce, odrážky,...) a odstraněny prvky vzniklé sazbou (záhlaví stránek, čísla jednotlivých stránek, ...). V několika mezifázích byl původní text ručně upravován a dalšími pythonovskými skripty převáděn do "čistší" podoby -- bližší strukturou a značkování originálu. Při synchronizaci byla zajištěna identická podoba příkladů kódu. Při kontrole značkování v běžném textu byl původní překlad někdy změněn tak, aby přesněji odpovídal originálu v technickém smyslu (formulace *hlavní větev* nahrazena `master` tam, kde bylo v originálu uvedeno `master`). Synchronizace byla dokončena na začátku prosince 2012.

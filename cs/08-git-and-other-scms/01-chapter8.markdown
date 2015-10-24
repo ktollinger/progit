@@ -12,7 +12,7 @@ Jednou ze skvělých funkcí systému Git je obousměrný most k systému Subver
 
 ### git svn ###
 
-Základním příkazem systému Git ke všem operacím směřujícím do systému Subversion je `git svn`. Takto začínají všechny příkazy. Ale není jich mnoho. Ty nejběžnější si představíme v několika malých modelových situacích.
+Základním příkazem systému Git ke všem operacím směřujícím do systému Subversion je `git svn`. Takto začínají všechny příkazy. Je jich docela dost, takže se na několika modelových postupech seznámíme s těmi nejběžnějšími.
 
 V tomto místě bych rád upozornil, že použijete-li příkaz `git svn`, zahajujete interakci se systémem Subversion, nástrojem zdaleka ne tak sofistikovaným jako Git. Přestože není problém lokálně pracovat s větvemi a slučovat je, obecně doporučujeme, abyste se snažili udržet historii co nejlineárnější (pomůže vám v tom přeskládání) a vyhýbali se úkonům, jako je současná interakce se vzdáleným repozitářem Git.
 
@@ -38,7 +38,7 @@ Nyní můžete tento projekt synchronizovat na svůj lokální počítač zadán
 
 	$ svnsync init file:///tmp/test-svn http://progit-example.googlecode.com/svn/
 
-Tím nastavíte vlastnosti synchronizace. Zdrojový kód pak naklonujete příkazem:
+Tím nastavíte vlastnosti synchronizace. Zdrojový kód pak naklonujete příkazem
 
 	$ svnsync sync file:///tmp/test-svn
 	Committed revision 1.
@@ -48,7 +48,7 @@ Tím nastavíte vlastnosti synchronizace. Zdrojový kód pak naklonujete příka
 	Committed revision 3.
 	...
 
-Tato operace bude trvat jen několik minut. Pokud byste se však pokoušeli zkopírovat originální repozitář ne do lokálního, nýbrž do jiného vzdáleného repozitáře, protáhne se proces téměř na hodinu, přestože repozitář obsahuje necelých 100 revizí. Subversion musí klonovat každou revizi zvlášť a tu pak odesílá zpět do jiného repozitáře. Tento postup je sice velice neefektivní, ale jiná možnost neexistuje.
+Tato operace bude trvat jen několik minut. Pokud byste se však pokoušeli zkopírovat originální repozitář ne do lokálního, nýbrž do jiného vzdáleného repozitáře, protáhne se proces téměř na hodinu, přestože repozitář obsahuje necelých 100 revizí. Subversion musí klonovat každou revizi zvlášť a tu pak odesílá zpět do jiného repozitáře. Tento postup je sice velice neefektivní, ale jiná jednoduchá možnost neexistuje.
 
 ### První kroky ###
 
@@ -258,7 +258,7 @@ Chcete-li současně pracovat ve více než jedné větvi, můžete nastavit lok
 
 Budete-li nyní chtít začlenit větev `opera` do větve `trunk` (vaše větev `master`), můžete tak učinit běžným příkazem `git merge`. Měli byste však uvést výstižnou zprávu revize (pomocí parametru `-m`). V opačném případě bude sloučení místo užitečných informací oznamovat jen „Merge branch opera“ („začleněna větev opera“).
 
-Nezapomeňte, že přestože k operaci používáte příkaz `git merge` a sloučení bude pravděpodobně o mnoho snazší, než by bylo v systému Subversion (Git automaticky vyhledá vhodnou základu pro sloučení), nejedná se o standardní příkaz merge systému Git. Tato data budete muset odeslat zpět na server Subversion, který nedokáže pracovat s revizí sledující více než jednoho rodiče. Proto až je odešlete, budou vypadat jako jediná revize, jež zkomprimovala veškerou práci jiné větve do jedné revize. Poté, co začleníte jednu větev do druhé, můžete se beze všeho vrátit zpět a pokračovat v práci na této větvi, stejně jako byste mohli v systému Git. Spustíte-li příkaz `dcommit`, smažete všechny informace, které sdělují, jaká větev byla začleněna, a všechny následné výpočty základny pro sloučení tak budou nesprávné. Příkaz dcommit způsobí, že bude výsledek příkazu `git merge` vypadat, jako byste spustili příkaz `git merge --squash`. Bohužel však neexistuje žádný dobrý způsob, jak této situaci předejít, Subversion nedokáže tyto informace uchovávat. Dokud tedy budete používat server Subversion, vždy se budete muset s tímto jeho nedostatkem vyrovnat. Chcete-li se vyhnout možným problémům, smažte lokální větev (v našem případě `opera`) hned poté, co jste ji začlenili do kmenového adresáře (trunk).
+Nezapomeňte, že přestože k operaci používáte příkaz `git merge` a sloučení bude pravděpodobně o mnoho snazší, než by bylo v systému Subversion (Git automaticky vyhledá vhodnou základu pro sloučení), nejedná se o standardní příkaz merge systému Git. Tato data budete muset odeslat zpět na server Subversion, který nedokáže pracovat s revizí sledující více než jednoho rodiče. Proto až je odešlete, budou vypadat jako jediná revize, jež zkomprimovala veškerou práci jiné větve do jedné revize. Poté, co začleníte jednu větev do druhé, můžete se beze všeho vrátit zpět a pokračovat v práci na této větvi, stejně jako byste mohli v systému Git. Spustíte-li příkaz `dcommit`, smažete všechny informace, které sdělují, jaká větev byla začleněna, a všechny následné výpočty základny pro sloučení tak budou nesprávné. Příkaz dcommit způsobí, že bude výsledek příkazu `git merge` vypadat, jako byste spustili příkaz `git merge --squash`. Bohužel však neexistuje žádný dobrý způsob, jak této situaci předejít, Subversion nedokáže tyto informace uchovávat. Dokud tedy budete používat server Subversion, vždy se budete muset s tímto jeho nedostatkem vyrovnat. Chcete-li se vyhnout možným problémům, smažte lokální větev (v našem případě `opera`) hned poté, co jste ji začlenili do kmenové větve (trunk).
 
 ### Příkazy systému Subversion ###
 
@@ -331,7 +331,7 @@ Můžete vyzkoušet
 
     if git rev-parse --git-dir > /dev/null 2>&1 && [[ $1 == "info" ]] ; then
       git svn info
-    else
+    else 
       /usr/local/bin/svn "$@"
     fi
 
@@ -360,7 +360,7 @@ Máte-li existující základ kódu v jiném systému VCS, ale rádi byste zača
 
 ### Import ###
 
-Nyní se naučíte, jak importovat data ze dvou větších, profesionálně používaných systémů SCM – Subversion a Perforce. Oba tyto systémy jsem zvolil proto, že podle mých informací přechází na Git nejvíce uživatelů právě z nich, a také proto, že Git obsahuje vysoce kvalitní nástroje právě pro oba tyto systémy.
+Nyní se naučíte, jak importovat data ze dvou větších, profesionálně používaných systémů SCM -- Subversion a Perforce. Oba tyto systémy jsem zvolil proto, že podle mých informací přechází na Git nejvíce uživatelů právě z nich, a také proto, že Git obsahuje vysoce kvalitní nástroje právě pro oba tyto systémy.
 
 ### Subversion ###
 
@@ -428,7 +428,7 @@ Na novém serveru Git tak nyní máte v úhledném, čistém importu uloženy v�
 
 ### Perforce ###
 
-Dalším systémem, z nějž budeme importovat, bude Perforce. Také importér Perforce je distribuován se systémem Git. Pokud máte verzi Git starší než 1.7.11, pak importér naleznete jen v sekci `contrib` zdrojového kódu.  V takovém případě budete muset získat zdrojový text systému Git, který můžete stáhnout ze serveru git.kernel.org:
+Dalším systémem, z nějž budeme importovat, bude Perforce. Také importér Perforce je distribuován se systémem Git. Pokud máte verzi Git starší než 1.7.11, pak importér naleznete jen v sekci `contrib` zdrojového kódu. V takovém případě budete muset získat zdrojový text systému Git, který můžete stáhnout ze serveru git.kernel.org:
 
 	$ git clone git://git.kernel.org/pub/scm/git/git.git
 	$ cd git/contrib/fast-import
@@ -497,7 +497,7 @@ Váš import je připraven k odeslání na nový server Git.
 
 ### Vlastní importér ###
 
-Není-li vaším současným systémem ani Subversion, ani Perforce, zkuste vyhledat importér online. Kvalitní importéry se dají najít pro CVS, Clear Case, Visual Source Safe, dokonce i adresář s archivy. Pokud vám nefunguje ani jeden z těchto nástrojů, používáte méně častý nástroj nebo potřebujete speciální proces importu ještě z jiného důvodu, použijte `git fast-import`. Tento příkaz načítá ze vstupů stdin jednoduché instrukce k zapsáni specifických dat systému Git. Je podstatně jednodušší vytvořit objekty Git tímto způsobem než spouštět syrové příkazy Git či se pokoušet zapsat syrové objekty (podrobnější informace v kapitole 9). Tímto způsobem lze vytvořit importovací skript, který bude načítat potřebné informace ze systému, z nějž import provádíte, a vypíše jasné instrukce do výstupu stdout. Tento program můžete spustit a jeho výstup nechat zpracovat příkazem `git fast-import`.
+Není-li vaším současným systémem ani Subversion, ani Perforce, zkuste vyhledat importér online. Kvalitní importéry se dají najít pro CVS, Clear Case, Visual Source Safe, dokonce i pro adresář s archivy. Pokud vám nevyhovuje ani jeden z těchto nástrojů, používáte méně častý nástroj, nebo potřebujete speciální proces importu ještě z jiného důvodu, použijte `git fast-import`. Tento příkaz načítá ze vstupů stdin jednoduché instrukce k zapsáni specifických dat systému Git. Je podstatně jednodušší vytvořit objekty Git tímto způsobem než spouštět syrové příkazy Git či se pokoušet zapsat syrové objekty (podrobnější informace v kapitole 9). Tímto způsobem lze vytvořit importovací skript, který bude načítat potřebné informace ze systému, z nějž import provádíte, a vypíše jasné instrukce do výstupu stdout. Tento program můžete spustit a jeho výstup nechat zpracovat příkazem `git fast-import`.
 
 Jako rychlou ukázku napíšeme jednoduchý importér. Řekněme, že pracujete na projektu, který příležitostně zálohujete zkopírováním pracovního adresáře do zálohového, datem označeného adresáře `back_YYYY_MM_DD`, a ten chcete nyní importovat do systému Git. Váš adresář má tuto strukturu:
 
@@ -571,7 +571,7 @@ Nyní je už vše připraveno k vygenerování dat revizí pro váš importér. 
 	export_data('imported from ' + dir)
 	puts 'from :' + last_mark if last_mark
 
-Časové pásmo definujete napevno (--0700), protože je to jednoduché. Pokud importujete z jiného systému, musíte zadat časové pásmo jako posun.
+Časové pásmo definujete napevno (-0700), protože je to jednoduché. Pokud importujete z jiného systému, musíte zadat časové pásmo jako posun.
 Zpráva k revizi musí být ve speciálním formátu:
 
 	data (size)\n(contents)

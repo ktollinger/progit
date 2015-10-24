@@ -42,7 +42,7 @@ Git nabízí celou řadu různých přenosových protokolů. Předchozí příkl
 
 Nyní máte vytvořen opravdový gitový repozitář a pracovní kopii souborů k projektu (checkout). Řekněme, že potřebujete udělat pár změn a zapsat snímky těchto změn do svého repozitáře pokaždé, kdy se projekt dostane do stavu, který chcete zaznamenat.
 
-Nezapomeňte, že každý soubor ve vašem pracovním adresáři může být ve dvou různých stavech: *sledován* (tracked) a *nesledován* (untracked). Za *sledované* jsou označovány soubory, které byly součástí posledního snímku. Mohou být ve stavu *změněn* (modified), *nezměněn* (unmodified) nebo *připraven k zapsání* (staged). *Nesledované* soubory jsou všechny ostatní, tedy veškeré soubory ve vašem pracovním adresáři, které nebyly obsaženy ve vašem posledním snímku a nejsou v oblasti připravených změn. Po úvodním klonování repozitáře budou všechny vaše soubory sledované a nezměněné, protože jste právě provedli jejich checkout a dosud jste neudělali žádné změny.
+Nezapomeňte, že každý soubor ve vašem pracovním adresáři může být ve dvou různých stavech: *sledován* (tracked) a *nesledován* (untracked). Za *sledované* jsou označovány soubory, které byly součástí posledního snímku. Mohou být ve stavu *změněn* (modified), *nezměněn* (unmodified) nebo *připraven k zapsání* (staged). *Nesledované* soubory jsou všechny ostatní, tedy veškeré soubory ve vašem pracovním adresáři, které nebyly obsaženy ve vašem posledním snímku a nejsou v oblasti připravených změn.  Po úvodním klonování repozitáře budou všechny vaše soubory sledované a nezměněné, protože jste právě provedli jejich checkout a dosud jste neudělali žádné změny.
 
 Jakmile začnete soubory upravovat, Git je bude považovat za změněné, protože jste v nich od poslední revize provedli změny. Poté všechny tyto změněné soubory *připravíte k zapsání* (stage) a následně všechny připravené změny zapíšete (commit). A celý cyklus se opakuje. Pracovní cyklus je znázorněn na obrázku 2-1.
 
@@ -66,7 +66,7 @@ To znamená, že žádné soubory nejsou připraveny k zapsání a pracovní adr
 	On branch master
 	Untracked files:
 	  (use "git add <file>..." to include in what will be committed)
-
+	
 	        README
 
 	nothing added to commit but untracked files present (use "git add" to track)
@@ -85,9 +85,9 @@ Když nyní znovu provedete příkaz k výpisu stavů (git status), uvidíte, ž
 	On branch master
 	Changes to be committed:
 	  (use "git reset HEAD <file>..." to unstage)
-
+	
 	        new file:   README
-
+	
 
 Můžeme říci, že je připraven k zapsání, protože je uveden v části „Changes to be committed“, tedy „Změny k zapsání“. Pokud v tomto okamžiku zapíšete revizi, v historickém snímku bude verze souboru z okamžiku, kdy jste spustili příkaz `git add`. Možná si vzpomínáte, že když jste před časem spustili příkaz `git init`, provedli jste potom příkaz `git add (soubory)`. Příkaz jste zadávali kvůli zahájení sledování souborů ve vašem adresáři. Příkaz `git add` je doplněn uvedením cesty buď k souboru, nebo k adresáři. Pokud se jedná o adresář, příkaz přidá rekurzivně všechny soubory v tomto adresáři.
 
@@ -99,15 +99,15 @@ Nyní provedeme změny v souboru, který už byl sledován. Pokud změníte už 
 	On branch master
 	Changes to be committed:
 	  (use "git reset HEAD <file>..." to unstage)
-
+	
 	        new file:   README
 
 	Changes not staged for commit:
 	  (use "git add <file>..." to update what will be committed)
 	  (use "git checkout -- <file>..." to discard changes in working directory)
-
+	
 	        modified:   benchmarks.rb
-
+	
 
 Soubor `benchmarks.rb` je uveden v části „Changes not staged for commit“ (změny, které nejsou připraveny k zapsání). Znamená to, že soubor, který je sledován, byl v pracovním adresáři změněn, avšak ještě nebyl připraven k zapsání (staged). Chcete-li ho připravit k zapsání, spusťte příkaz `git add` (jedná se o víceúčelový příkaz – používá se k zahájení sledování nových souborů i k dalším operacím, jako je například označení vyřešených případů kolize souborů při slučování). Spusťme nyní příkaz `git add`, abychom soubor `benchmarks.rb` připravili k zapsání, a potom znovu zadejme příkaz `git status`:
 
@@ -116,10 +116,10 @@ Soubor `benchmarks.rb` je uveden v části „Changes not staged for commit“ (
 	On branch master
 	Changes to be committed:
 	  (use "git reset HEAD <file>..." to unstage)
-
+	
 	        new file:   README
 	        modified:   benchmarks.rb
-
+	
 
 Oba soubory jsou nyní připraveny k zapsání a budou zahrnuty do příští revize. Nyní předpokládejme, že jste si vzpomněli na jednu malou změnu, kterou chcete ještě před zapsáním revize provést v souboru `benchmarks.rb`. Soubor znovu otevřete, provedete změnu a chcete jej zapsat. Spusťme však ještě jednou příkaz `git status`:
 
@@ -128,16 +128,16 @@ Oba soubory jsou nyní připraveny k zapsání a budou zahrnuty do příští re
 	On branch master
 	Changes to be committed:
 	  (use "git reset HEAD <file>..." to unstage)
-
+	
 	        new file:   README
 	        modified:   benchmarks.rb
-
+	
 	Changes not staged for commit:
 	  (use "git add <file>..." to update what will be committed)
 	  (use "git checkout -- <file>..." to discard changes in working directory)
-
+	
 	        modified:   benchmarks.rb
-
+	
 
 Co to má být? Soubor `benchmarks.rb` je nyní uveden jak v části připraveno k zapsání (Changes to be committed), tak v části nepřipraveno k zapsání (Changes not staged for commit). Jak je tohle možné? Věc se má tak, že Git po spuštění příkazu `git add` připraví soubor k zapsání přesně ve tvaru, v jakém se nachází v daném okamžiku. Pokud nyní revizi zapíšete, bude obsahovat soubor `benchmarks.rb` tak, jak vypadal, když jste naposledy spustili příkaz `git add`, nikoli v té podobě, kterou měl v pracovním adresáři v okamžiku, když jste spustili příkaz `git commit`. Pokud upravíte soubor po provedení příkazu `git add`, je třeba spustit `git add` ještě jednou, aby byla připravena aktuální verze souboru:
 
@@ -146,14 +146,14 @@ Co to má být? Soubor `benchmarks.rb` je nyní uveden jak v části připraveno
 	On branch master
 	Changes to be committed:
 	  (use "git reset HEAD <file>..." to unstage)
-
+	
 	        new file:   README
 	        modified:   benchmarks.rb
-
+	
 
 ### Ignorované soubory ###
 
-Ve vašem adresáři se často vyskytne skupina souborů, u nichž nebudete chtít, aby je Git automaticky přidával nebo aby je vůbec uváděl jako nesledované. Jedná se většinou o automaticky vygenerované soubory, jako soubory log nebo soubory vytvořené při překladu. V takových případech můžete vytvořit soubor `.gitignore` se seznamem masek pro ignorované soubory. Tady je malý příklad souboru `.gitignore`:
+Ve vašem adresáři se často vyskytne skupina souborů, u nichž nebudete chtít, aby je Git automaticky přidával nebo aby je vůbec uváděl jako nesledované. Jedná se většinou o automaticky vygenerované soubory, jako soubory log nebo soubory vytvořené při překladu. V takových případech můžete vytvořit soubor `.gitignore` se seznamem masek pro ignorované soubory.  Tady je malý příklad souboru `.gitignore`:
 
 	$ cat .gitignore
 	*.[oa]
@@ -198,15 +198,15 @@ Je-li pro vaše potřeby příkaz `git status` příliš neurčitý – chcete p
 	On branch master
 	Changes to be committed:
 	  (use "git reset HEAD <file>..." to unstage)
-
+	
 	        new file:   README
-
+	
 	Changes not staged for commit:
 	  (use "git add <file>..." to update what will be committed)
 	  (use "git checkout -- <file>..." to discard changes in working directory)
-
+	
 	        modified:   benchmarks.rb
-
+	
 
 Chcete-li vidět, co jste změnili, avšak ještě nepřipravili k zapsání, zadejte příkaz `git diff` bez dalších parametrů:
 
@@ -254,15 +254,15 @@ V dalším příkladu ukážeme situaci, kdy jste připravili soubor `benchmarks
 	On branch master
 	Changes to be committed:
 	  (use "git reset HEAD <file>..." to unstage)
-
+	
 	        modified:   benchmarks.rb
-
+	
 	Changes not staged for commit:
 	  (use "git add <file>..." to update what will be committed)
 	  (use "git checkout -- <file>..." to discard changes in working directory)
-
+	
 	        modified:   benchmarks.rb
-
+	
 
 Příkaz `git diff` nyní můžete použít k zobrazení změn, které dosud nejsou připraveny:
 
@@ -341,9 +341,9 @@ Přestože může být oblast připravených změn opravdu užitečným nástroj
 	Changes not staged for commit:
 	  (use "git add <file>..." to update what will be committed)
 	  (use "git checkout -- <file>..." to discard changes in working directory)
-
+	
 	        modified:   benchmarks.rb
-
+	
 	no changes added to commit (use "git add" and/or "git commit -a")
 	$ git commit -a -m 'added new benchmarks'
 	[master 83e38c7] added new benchmarks
@@ -363,9 +363,9 @@ Pokud soubor jednoduše odstraníte z pracovního adresáře, zobrazí se ve vý
 	Changes not staged for commit:
 	  (use "git add/rm <file>..." to update what will be committed)
 	  (use "git checkout -- <file>..." to discard changes in working directory)
-
+	
 	        deleted:    grit.gemspec
-
+	
 	no changes added to commit (use "git add" and/or "git commit -a")
 
 Pokud nyní provedete příkaz `git rm`, bude k zapsání připraveno odstranění souboru:
@@ -376,9 +376,9 @@ Pokud nyní provedete příkaz `git rm`, bude k zapsání připraveno odstraněn
 	On branch master
 	Changes to be committed:
 	  (use "git reset HEAD <file>..." to unstage)
-
+	
 	        deleted:    grit.gemspec
-
+	
 
 Po příštím zapsání revize soubor zmizí a přestane být sledován. Pokud už jste soubor upravili a přidali do indexu, musíte odstranění provést pomocí parametru `-f`. Jedná se o bezpečnostní funkci, jež má zabránit nechtěnému odstranění dat, která ještě nebyla nahrána do snímku, a nemohou proto být ze systému Git obnovena.
 
@@ -390,7 +390,7 @@ Příkaz `git rm` lze používat v kombinaci se soubory, adresáři a maskami so
 
 	$ git rm log/\*.log
 
-Všimněte si tu zpětného lomítka (`\`) před znakem `*`. Je tu proto, že Git provádí své vlastní nahrazování masek souborů nad to, které provádí váš shell. Tímto příkazem odstraníte všechny soubory s příponou `.log` z adresáře `log/`. Provést můžete také tento příkaz:
+Všimněte si tu zpětného lomítka (`\`) před znakem `*`. Je tu proto, že Git provádí své vlastní nahrazování masek souborů nad to, které provádí váš shell. V konzolovém okně systému Windows musíte zpětné lomítko vynechat. Tímto příkazem odstraníte všechny soubory s příponou `.log` z adresáře `log/`. Provést můžete také tento příkaz:
 
 	$ git rm \*~
 
@@ -402,7 +402,7 @@ Na rozdíl od ostatních systémů pro správu verzí nesleduje Git explicitně 
 
 Může se zdát zvláštní, že Git přesto používá příkaz `mv`. Chcete-li v systému Git přejmenovat soubor, můžete spustit třeba příkaz
 
-	$ git mv původní_název nový_název
+	$ git mv file_from file_to
 
 a vše funguje na výbornou. A skutečně, pokud takový příkaz provedete a podíváte se na stav souboru, uvidíte, že ho Git považuje za přejmenovaný (renamed):
 
@@ -411,9 +411,9 @@ a vše funguje na výbornou. A skutečně, pokud takový příkaz provedete a po
 	On branch master
 	Changes to be committed:
 	  (use "git reset HEAD <file>..." to unstage)
-
+	
 	        renamed:    README -> README.txt
-
+	
 
 Výsledek je však stejný, jako byste provedli následující:
 
@@ -643,7 +643,7 @@ Pokud chcete zadat více parametrů grep, musíte přidat výraz `--all-match`, 
 
 Posledním opravdu užitečným parametrem, který lze přidat k příkazu `git log` , je zadání cesty. Jestliže zadáte název adresáře nebo souboru, výstup logu tím omezíte na revize, které provedly změnu v těchto souborech. Cesta je vždy posledním parametrem a většinou jí předcházejí dvě pomlčky (`--`) , jimiž je oddělena od ostatních parametrů.
 
-Tabulka 2-3 uvádí pro přehlednost zmíněné parametry a několik málo dalších. Tabulka 2.2
+Tabulka 2-3 uvádí pro přehlednost zmíněné parametry a několik málo dalších.
 
 <!-- Poznámka pro překladatele: toto je zápis tabulky.
 Řádky musí být formátovány následovně
@@ -665,27 +665,27 @@ Pokud chcete zjistit, které revize (commit) v repozitáři se zdrojovým kódem
     $ git log --after="2014-04-29 00:00:00" --before="2014-04-29 23:59:59" \
       --pretty=fuller
 
-Protože se výstup bude lišit podle časového pásma v místě spuštění, doporučuje se v argumentech `--after` a `--before` vždy používat absolutní čas (například ve formátu ISO 8601, který obsahuje i informaci o časovém pásmu). Činíme tak proto, aby každý, kdo stejný příkaz spustí, obdržel stejné, opakovatelné výsledky.
+Protože se výstup bude lišit podle časového pásma v místě spuštění, doporučuje se v argumentech `--after` a `--before` vždy používat absolutní čas (například ve formátu ISO 8601, který obsahuje i informaci o časovém pásmu). Činíme tak proto, aby každý, kdo stejný příkaz spustí, obdržel stejné, opakovatelné výsledky. 
 
 Pokud chceme získat zápisy z určitého časového okamžiku (například z 29. dubna 2013 v 17:07:22 středoevropského času), můžeme použít příkaz
 
     $ git log  --after="2013-04-29T17:07:22+0200"      \
               --before="2013-04-29T17:07:22+0200" --pretty=fuller
-
+    
     commit de7c201a10857e5d424dbd8db880a6f24ba250f9
     Author:     Ramkumar Ramachandra <artagnon@gmail.com>
     AuthorDate: Mon Apr 29 18:19:37 2013 +0530
     Commit:     Junio C Hamano <gitster@pobox.com>
     CommitDate: Mon Apr 29 08:07:22 2013 -0700
-
+    
         git-completion.bash: lexical sorting for diff.statGraphWidth
-
+        
         df44483a (diff --stat: add config option to limit graph width,
         2012-03-01) added the option diff.startGraphWidth to the list of
         configuration variables in git-completion.bash, but failed to notice
         that the list is sorted alphabetically.  Move it to its rightful place
         in the list.
-
+        
         Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
         Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
@@ -755,10 +755,10 @@ Následující dvě části popisují, jak se poprat s oblastí připravených z
 	On branch master
 	Changes to be committed:
 	  (use "git reset HEAD <file>..." to unstage)
-
+	
 	        modified:   README.txt
 	        modified:   benchmarks.rb
-
+	
 
 Přímo pod nadpisem „Changes to be committed“ (Změny k zapsání) se říká: pro návrat z oblasti připravených změn použijte příkaz `git reset HEAD <soubor>...` Budeme se tedy řídit touto radou a vrátíme soubor `benchmarks.rb` z oblasti připravených změn:
 
@@ -769,15 +769,15 @@ Přímo pod nadpisem „Changes to be committed“ (Změny k zapsání) se řík
 	On branch master
 	Changes to be committed:
 	  (use "git reset HEAD <file>..." to unstage)
-
+	
 	        modified:   README.txt
-
+	
 	Changes not staged for commit:
 	  (use "git add <file>..." to update what will be committed)
 	  (use "git checkout -- <file>..." to discard changes in working directory)
-
+	
 	        modified:   benchmarks.rb
-
+	
 
 Příkaz je sice trochu zvláštní, ale funguje. Soubor `benchmarks.rb` má stav „změněn“, ale už se nenachází v oblasti připravených změn.
 
@@ -788,9 +788,9 @@ A co když zjistíte, že nechcete zachovat změny, které jste provedli v soubo
 	Changes not staged for commit:
 	  (use "git add <file>..." to update what will be committed)
 	  (use "git checkout -- <file>..." to discard changes in working directory)
-
+	
 	        modified:   benchmarks.rb
-
+	
 
 Výpis vám sděluje, jak zahodit změny (discard changes), které jste provedli (přinejmenším tak činí novější verze systému Git, od verze 1.6.1; pokud máte starší verzi, doporučujeme ji aktualizovat, čímž získáte některé z těchto vylepšených funkcí). Uděláme, co nám výpis radí:
 
@@ -799,9 +799,9 @@ Výpis vám sděluje, jak zahodit změny (discard changes), které jste provedli
 	On branch master
 	Changes to be committed:
 	  (use "git reset HEAD <file>..." to unstage)
-
+	
 	        modified:   README.txt
-
+	
 
 Jak vidíte, změny byly zahozeny. Všimněte si také, že se jedná o nebezpečný příkaz. Veškeré změny, které jste v souboru provedli, jsou ztraceny, soubor jste právě překopírovali jiným souborem. Nikdy tento příkaz nepoužívejte, pokud si nejste zcela jisti, že už daný soubor nebudete potřebovat. Pokud potřebujete pouze odstranit soubor z cesty, podívejte se na odkládání (stashing) a větvení v následující kapitole. Tyto postupy většinou bývají vhodnější.
 
@@ -814,7 +814,7 @@ Při správě vzdálených repozitářů musíte vědět, jak lze přidat vzdál
 
 ### Zobrazení vzdálených serverů ###
 
-Chcete-li zjistit, jaké vzdálené servery máte nakonfigurovány, můžete použít příkaz `git remote`. Systém vypíše krátké názvy, přes které se se vzdálenými repozitáři manipuluje, a které jste dříve určili. Pokud byl váš repozitář vytvořen klonováním, měli byste vidět přinejmenším server *origin*. Jde o výchozí název, který Git dává serveru, z nějž jste repozitář klonovali.
+Chcete-li zjistit, jaké vzdálené servery máte nakonfigurovány, můžete použít příkaz `git remote`. Systém vypíše krátké názvy, přes které se se vzdálenými repozitáři manipuluje, a které jste dříve určili. Pokud byl váš repozitář vytvořen klonováním, měli byste vidět přinejmenším server *origin*. Jde o výchozí název, který Git dává serveru, z nějž jste repozitář klonovali:
 
 	$ git clone git://github.com/schacon/ticgit.git
 	Cloning into 'ticgit'...
@@ -883,11 +883,11 @@ Pokud máte větev nastavenou ke sledování vzdálené větve (více informací
 
 ### Odesílání do vzdálených repozitářů ###
 
-Pokud se váš projekt nachází ve stavu, kdy ho chcete sdílet s ostatními, můžete ho odeslat (push) na vzdálený server. Příkaz pro tuto akci je jednoduchý: `git push [název vzdáleného repozitáře] [název větve]`. Pokud chcete poslat svou hlavní větev na server `origin` (i tady platí, že proces klonování vám nastaví názvy `master` i `origin` automaticky), můžete k odeslání své práce na server použít tento příkaz:
+Pokud se váš projekt nachází ve stavu, kdy ho chcete sdílet s ostatními, můžete ho odeslat (push) na referenční server (upstream). Příkaz pro tuto akci je jednoduchý: `git push [název vzdáleného repozitáře] [název větve]`. Pokud chcete poslat svou hlavní větev na server `origin` (i tady platí, že proces klonování vám nastaví názvy `master` i `origin` automaticky), můžete k odeslání své práce na server použít tento příkaz:
 
 	$ git push origin master
 
-Tento příkaz bude funkční, pouze pokud jste klonovali ze serveru, k němuž máte oprávnění pro zápis, a pokud sem od vašeho klonování nikdo neposílal svou práci. Pokud spolu s vámi provádí současně klonování ještě někdo další a ten poté svou práci odešle na server, vaše později odesílaná práce bude oprávněně odmítnuta. Nejprve musíte stáhnout práci ostatních a začlenit ji do své, teprve potom vám server umožní odeslání. Více informací o odesílání na vzdálené servery najdete v *kapitole 3*.
+Tento příkaz bude funkční, pouze pokud jste klonovali ze serveru, k němuž máte oprávnění pro zápis, a pokud sem od vašeho klonování nikdo neposílal svou práci. Pokud spolu s vámi provádí současně klonování ještě někdo další a ten poté svou práci odešle na referenční server (upstream), vaše později odesílaná práce bude oprávněně odmítnuta. Nejprve musíte stáhnout práci ostatních a začlenit ji do své, teprve potom vám server umožní odeslání. Více informací o odesílání na vzdálené servery najdete v *kapitole 3*.
 
 ### Prohlížení vzdálených repozitářů ###
 
@@ -1127,7 +1127,7 @@ Můžete se podívat, že jste revizi označil:
 
 ### Sdílení značek ###
 
-Příkaz `git push` nepřenáší značky na vzdálené servery automaticky. Pokud jste vytvořili značku, budete ji muset na sdílený server poslat explicitně. Tento proces je stejný jako sdílení vzdálených větví. Spusťte příkaz `git push origin [název značky]`.
+Příkaz `git push` nepřenáší značky na vzdálené servery automaticky. Pokud jste vytvořili značku, budete ji muset na sdílený server poslat explicitně.  Tento proces je stejný jako sdílení vzdálených větví. Spusťte příkaz `git push origin [název značky]`.
 
 	$ git push origin v1.5
 	Counting objects: 50, done.
@@ -1137,7 +1137,7 @@ Příkaz `git push` nepřenáší značky na vzdálené servery automaticky. Pok
 	To git@github.com:schacon/simplegit.git
 	* [new tag]         v1.5 -> v1.5
 
-Máte-li značek více a chcete je odeslat všechny najednou, můžete použít také parametr `--tags`, který se přidává k příkazu `git push`. Tento příkaz přenese na vzdálený server všechny vaše značky, které tam ještě nejsou.
+Máte-li značek více a chcete je odeslat všechny najednou, můžete použít také parametr `--tags`, který se přidává k příkazu `git push`.  Tento příkaz přenese na vzdálený server všechny vaše značky, které tam ještě nejsou.
 
 	$ git push origin --tags
 	Counting objects: 50, done.
@@ -1155,7 +1155,7 @@ Pokud nyní někdo bude klonovat nebo stahovat z vašeho repozitáře, stáhne r
 
 ## Tipy a triky ##
 
-Než ukončíme tuto kapitolu věnovanou základům práce se systémem Git, přidáme ještě pár tipů a triků, které vám mohou usnadnit či zpříjemnit práci. Mnoho uživatelů pracuje se systémem Git, aniž by tyto triky znali a používali. V dalších částech knihy se už o nich nebudeme zmiňovat ani nebudeme předpokládat, že je používáte. Přesto pro vás mohou být užitečné.
+Než ukončíme tuto kapitolu věnovanou základům práce se systémem Git, přidáme ještě pár tipů a triků, které vám mohou usnadnit či zpříjemnit práci. Mnoho uživatelů pracuje se systémem Git, aniž by tyto triky používali. V dalších částech knihy se už o nich nebudeme zmiňovat, ale asi byste měli vědět, jak jich využít.
 
 ### Automatické dokončování ###
 
@@ -1172,7 +1172,7 @@ Při zadávání příkazu Git stiskněte klávesu Tab a měla by se objevit nab
 	$ git co<tab><tab>
 	commit config
 
-Pokud zadáte – stejně jako v našem příkladu nahoře – `git co` a dvakrát stisknete klávesu Tab, systém vám navrhne „commit“ a „config“. Doplníte-li ještě `m<tab>`, skript automaticky dokončí příkaz na `git commit`.
+Pokud napíšete `git co` a dvakrát stisknete klávesu Tab, systém vám navrhne „commit“ a „config“. Pokud přidáte `m<tab>`, příkaz se automaticky dokončí jako `git commit`.
 
 Automatické dokončování pravděpodobně více využijete v případě parametrů. Pokud například zadáváte příkaz `git log` a nemůžete si vzpomenout na některý z parametrů, můžete zadat jeho začátek, stisknout klávesu Tab a podívat se, co by to mohlo přesně být:
 

@@ -162,7 +162,7 @@ Za znakem `^` můžete zadat také číslo, např. `d921970^2` označuje „druh
 
 	    Some rdoc changes
 
-Další základní možností označení původu je znak `~`. Také tento znak označuje prvního rodiče, výrazy `HEAD~` a `HEAD^` jsou proto ekvivalentní. Rozdíl mezi nimi je patrný při zadání čísla. `HEAD~2` označuje „prvního rodiče prvního rodiče“, tedy „prarodiče“. Příkaz překročí prvního rodiče tolikrát, kolikrát udává číselná hodnota. Například v historii naznačené výše by `HEAD~3` znamenalo:
+Další základní možností označení původu je znak `~`. Také tento znak označuje prvního rodiče, výrazy `HEAD~` a `HEAD^` jsou proto ekvivalentní. Rozdíl mezi nimi je patrný při zadání čísla. `HEAD~2` označuje „prvního rodiče prvního rodiče“, tedy „prarodiče“. Příkaz překročí prvního rodiče tolikrát, kolikrát udává číselná hodnota. Například v historii naznačené výše by `HEAD~3` znamenalo
 
 	$ git show HEAD~3
 	commit 1c3618887afb5fbcbea25b7c013f4e2114448b8d
@@ -214,7 +214,7 @@ Jednu stranu intervalu můžete zcela vynechat, Git na její místo automaticky 
 
 #### Několik bodů ####
 
-Dvojtečková syntaxe je užitečná jako zkrácený výraz. Možná ale budete chtít k označení revize určit více než dvě větve, např. až budete chtít zjistit, které revize jsou obsaženy ve všech ostatních větvích a zároveň nejsou obsaženy ve větvi, na níž se právě nacházíte. V systému Git to můžete provést buď zadáním znaku `^` nebo parametru `--not` před referencí, jejíž dostupné revize si nepřejete zobrazit. Tyto tři příkazy jsou tedy ekvivalentní:
+Zápis s dvěma tečkami přestavuje užitečnou zkratku. Možná ale budete chtít k označení revize určit více než dvě větve, např. až budete chtít zjistit, které revize jsou obsaženy ve všech ostatních větvích a zároveň nejsou obsaženy ve větvi, na níž se právě nacházíte. V systému Git to můžete provést buď zadáním znaku `^` nebo parametru `--not` před referencí, jejíž dostupné revize si nepřejete zobrazit. Tyto tři příkazy jsou tedy ekvivalentní:
 
 	$ git log refA..refB
 	$ git log ^refA refB
@@ -404,11 +404,11 @@ V českém překladu:
 	/ - najít soubor změn odpovídající danému regulárnímu výrazu
 	j - nechat tento soubor změn nerozhodnutý, zobrazit další nerozhodnutý
 	J - nechat tento soubor změn nerozhodnutý, zobrazit další komplex
-	j - nechat tento soubor změn nerozhodnutý, zobrazit předchozí nerozhodnutý
-	J - nechat tento soubor změn nerozhodnutý, zobrazit předchozí komplex
+	k - nechat tento soubor změn nerozhodnutý, zobrazit předchozí nerozhodnutý
+	K - nechat tento soubor změn nerozhodnutý, zobrazit předchozí komplex
 	s - rozdělit aktuální soubor změn do menších komplexů
 	e - ručně editovat aktuální soubor změn
-	? - nápověda
+	? - zobrazit nápovědu
 
 Chcete-li připravit k zapsání jednotlivé komplexy, většinou zadáte `y` nebo `n`. Přesto se vám může někdy hodit i možnost připravit všechny komplexy v určitých souborech nebo přeskočení komplexu, k němuž se vrátíte později. Připravíte-li k zapsání jednu část souboru a druhou nikoli, bude výstup příkazu status vypadat asi takto:
 
@@ -515,7 +515,7 @@ Jestliže nespecifikujete konkrétní odklad, Git předpokládá odklad posledn�
 
     $ git stash show -p | git apply -R
 
-Můžete si také vytvořit alias a do svého gitu přidat například příkaz `stash-unapply`:
+Můžete si také vytvořit alias a do svého gitu tím přidat příkaz `stash-unapply`. Například takto:
 
     $ git config --global alias.stash-unapply '!git stash show -p | git apply -R'
     $ git stash apply
@@ -614,8 +614,8 @@ Skript je třeba upravit tak, aby zastavil na revizi, v níž chcete provést zm
 
 Po uložení změn a zavření editoru vás Git vrátí zpět na poslední revizi v seznamu a zobrazí vám příkazový řádek s touto zprávou:
 
-<!-- This is actually weird, as the SHA-1 of 7482e0d is not present in the list,
-nor is the commit message. Please review
+<!-- This is actually weird, as the SHA-1 of 7482e0d is not present in the list, 
+nor is the commit message. Please review 
 -->
 
 	$ git rebase -i HEAD~3
@@ -624,7 +624,7 @@ nor is the commit message. Please review
 
 	       git commit --amend
 
-	Once you’re satisfied with your changes, run
+	Jakmile jste s vašimi změnami spokojeni, spusťte
 
 	       git rebase --continue
 
@@ -704,7 +704,7 @@ Rozdělení revize vrátí všechny změny v revizi obsažené a po částech je
 	edit 310154e updated README formatting and added blame
 	pick a5f4a0d added cat-file
 
-Až vás poté skript přesune na příkazový řádek, resetujete revizi, vezmete změny, které jste resetovali, a vytvoříte z nich několik dílčích revizí. Až uložíte změny a zavřete editor, Git se vrátí na rodiče první revize ve vašem seznamu, aplikuje první revizi (`f7f3f6d`), aplikuje druhou revizi (`310154e`) a přesune vás na konzoli. Tam můžete vytvořit smíšený reset této revize pomocí příkazu `git reset HEAD^`, který efektivně vrátí všechny změny v revizi a ponechá změněné soubory nepřipraveny k zapsání. Nyní můžete připravit a zapsat soubory. Až budete mít jednotlivé revize hotové a budete spokojeni s jejich podobou, zadejte příkaz `git rebase --continue`:
+Když uložíte změny a zavřete editor, Git se vrátí na rodiče první revize ve vašem seznamu, aplikuje první revizi (`f7f3f6d`), aplikuje druhou revizi (`310154e`) a ocitnete se znovu na konzoli. Odtud můžete vytvořit smíšený reset této revize zadáním příkazu `git reset HEAD^`, který efektivně vrátí všechny změny v revizi a ponechá změněné soubory nepřipraveny k zapsání. Teď můžete vzít změny, které jste resetovali, a vytvořit z nich několik dílčích revizí. Zkrátka postupně soubory připravíte a zapíšete, čímž vznikne několik zápisů. Jakmile s tím budete hotovi, zadejte příkaz `git rebase --continue`:
 
 	$ git reset HEAD^
 	$ git add README
@@ -725,7 +725,7 @@ Také v tomto případě se změní hodnoty SHA všech revizí v seznamu, a prot
 
 ### Pitbul mezi příkazy: filter-branch ###
 
-Existuje ještě další možnost přepisu historie, kterou vám Git nabízí pro případy, kdy potřebujete skriptovatelným způsobem přepsat větší počet revizí, např. globálně změnit e-mailovou adresu nebo odstranit jeden soubor ze všech revizí. Příkaz pro tento případ je `filter-branch`. Dokáže přepsat velké části vaší historie, a proto byste ho určitě neměli používat, pokud už byl váš projekt zveřejněn a ostatní uživatelé už založili svou práci na revizích, které hodláte přepsat. Příkaz přesto může být velmi užitečný. Dále poznáte několik běžných situací, v nichž ho lze použít, a získáte tak představu, co všechno příkaz dovede.
+Existuje ještě další možnost přepisu historie, kterou vám Git nabízí pro případy, kdy potřebujete skriptovatelným způsobem přepsat větší počet revizí, např. globálně změnit e-mailovou adresu nebo odstranit jeden soubor ze všech revizí.  Příkaz pro tento případ je `filter-branch`. Dokáže přepsat velké části vaší historie, a proto byste ho určitě neměli používat, pokud už byl váš projekt zveřejněn a ostatní uživatelé už založili svou práci na revizích, které hodláte přepsat.  Příkaz přesto může být velmi užitečný. Dále poznáte několik běžných situací, v nichž ho lze použít, a získáte tak představu, co všechno příkaz dovede.
 
 #### Odstranění souboru ze všech revizí ####
 
@@ -767,7 +767,7 @@ Příkaz projde a přepíše všechny revize tak, aby obsahovaly novou adresu. P
 
 ### Velmi rychlá a nebezpečná zbraň: Big Friendly Giant Repo Cleaner (BFG) ###
 
-[Roberto Tyley](https://github.com/rtyley) vytvořil nástroj, který se funkčností podobá `filter-branch` a nazval jej BFG. (Celý název lze doslova přeložit jako Velký, přátelský, obří čistič repozitáře --- představte si pod tím, co chcete.) BFG neumí tolik věcí jako `filter-branch`, ale je *velmi* rychlý. Pro velké repozitáře to může být zásadní rozdíl. Pokud lze vámi zamýšlenou změnu pomocí BFG provést a pokud máte problémy s výkonností prostředí, pak byste o použití tohoto nástroje měli uvažovat.
+[Roberto Tyley](https://github.com/rtyley) vytvořil nástroj, který se funkčností podobá `filter-branch` a nazval jej BFG. (Celý název lze doslova přeložit jako Velký, přátelský, obří čistič repozitáře -- představte si pod tím, co chcete.) BFG neumí tolik věcí jako `filter-branch`, ale je _velmi_ rychlý. Pro velké repozitáře to může být zásadní rozdíl. Pokud lze vámi zamýšlenou změnu pomocí BFG provést a pokud máte problémy s výkonností prostředí, pak byste o použití tohoto nástroje měli uvažovat.
 
 Podrobnosti naleznete na stránkách [BFG](http://rtyley.github.io/bfg-repo-cleaner/).
 
@@ -831,7 +831,7 @@ Git zjistil, že mezi revizí, kterou jste označili jako poslední dobrou (v1.0
 	Bisecting: 3 revisions left to test after this
 	[b047b02ea83310a70fd603dc8cd7a6cd13d15c04] secure this thing
 
-Nyní jste na jiné revizi, na půl cesty mezi revizí, kterou jste právě otestovali, a problémovou revizí. Znovu provedete svůj test a zjistíte, že tato revize vykazuje chybu. Systému Git to sdělíte příkazem `git bisect bad`:
+Nyní jste na jiné revizi, na půl cesty mezi revizí, kterou jste právě otestovali, a problémovou revizí. Znovu provedete svůj test a zjistíte, že tato revize vykazuje chybu. Systému Git to tedy sdělíte příkazem `git bisect bad`:
 
 	$ git bisect bad
 	Bisecting: 1 revisions left to test after this
@@ -850,11 +850,11 @@ Tato revize je v pořádku, a Git tak má nyní všechny informace, které potř
 	:040000 040000 40ee3e7821b895e52c1695092db9bdc4c61d1730
 	f24d3c6ebcfc639b1a3814550e62d60b8e68a8e4 M  config
 
-Až vyhledávání dokončíte, měli byste použít příkaz `git bisect reset`, abyste se vrátili do jednoznačného stavu. Příkaz vrátí váš ukazatel HEAD na pozici, z níž jste vyhledávání zahajovali:
+Až vyhledávání dokončíte, měli byste použít příkaz `git bisect reset`, abyste vrátili ukazatel HEAD na pozici, z níž jste vyhledávání zahajovali. Jinak byste skončili v nějakém podivném stavu:
 
 	$ git bisect reset
 
-bisect je výkonný nástroj, který vám může pomoci zkontrolovat za pár minut i stovky revizí s neurčitou chybou. A máte-li skript, jehož výstupem bude 0, pokud je projekt v pořádku, nebo nenulovou hodnotu, pokud je v projektu chyba, můžete příkaz `git bisect` dokonce plně automatizovat. Nejprve opět zadáte poslední známé revize s chybou a bez ní, jimiž vytyčíte cílovou oblast pro příkaz bisect. Chcete-li, můžete to provést příkazem `bisect start` – jako první uvedete známou revizi s chybou, jako druhá bude následovat poslední známá dobrá revize:
+Tento příkaz představuje výkonný nástroj, který vám pomůže vyhledat zavlečenou chybu mezi stovkami revizí za pár minut. A máte-li skript, který bude pro správně fungující projekt vracet hodnotu 0 (nula), nebo nenulovou hodnotu, pokud je v projektu chyba, můžete příkaz `git bisect` dokonce plně automatizovat. Nejprve opět zadáte poslední známé revize s chybou a bez ní, jimiž vymezíte pracovní rozsah pro příkaz bisect. Chcete-li, můžete to provést příkazem `bisect start` –- jako první uvedete známou revizi s chybou, jako druhá bude následovat poslední známá dobrá revize:
 
 	$ git bisect start HEAD v1.0
 	$ git bisect run test-error.sh
@@ -912,7 +912,7 @@ Tím dalším, co se objevuje ve výstupu příkazu `git status`, je položka ra
 	@@ -0,0 +1 @@
 	+Subproject commit 08d709f78b8c5b0fbeb7821e37fa53e69afcf433
 
-Ačkoli je `rack` podadresářem ve vašem pracovním adresáři, Git ví, že se jedná o submodul, a dokud se v tomto adresáři nenacházíte, nesleduje jeho obsah. Místo toho zaznamenává Git konkrétní revizi z tohoto adresáře. Provedete-li v tomto podadresáři změny a zapíšete revizi, superprojekt (tedy celkový, nadřízený projekt) zjistí, že se tu ukazatel HEAD změnil, a zaznamená přesnou revizi, na níž právě pracujete. Pokud pak tento projekt naklonují jiní uživatelé, budou schopni přesně obnovit původní prostředí.
+Ačkoli je `rack` podadresářem ve vašem pracovním adresáři, Git ví, že se jedná o submodul, a dokud se v tomto adresáři nenacházíte, nesleduje jeho obsah. Místo toho si Git zaznamená konkrétní revizi z tohoto repozitáře. Provedete-li v tomto podadresáři změny a zapíšete revizi, superprojekt (tedy celkový, nadřízený projekt) zjistí, že se ukazatel HEAD (podřízeného) projektu změnil, a zaznamená přesnou revizi, na níž právě pracujete. Pokud pak tento projekt naklonují jiní uživatelé, budou schopni přesně obnovit původní prostředí.
 
 Toto je důležitá vlastnost submodulů: zaznamenáváte je jako přesné revize, na nichž se nacházejí. Submodul nelze zaznamenat na větvi `master` nebo na jiné symbolické referenci.
 
@@ -1000,7 +1000,7 @@ Začlenili jste něco, co je v podstatě změna ukazatele vašeho submodulu. Nea
 	-Subproject commit 6c5e70b984a60b3cecd395edd5b48a7575bf58e0
 	+Subproject commit 08d709f78b8c5b0fbeb7821e37fa53e69afcf433
 
-A tak to opravdu je. Ukazatel, který máte pro submodul, není to, co máte skutečně v adresáři submodulu. Abyste tento problém vyřešili, spusťte ještě jednou příkaz `git submodule update`:
+A tak to opravdu je, protože ukazatel, který máte pro submodul, není to, co máte skutečně v adresáři submodulu. Abychom to napravili, musíme ještě jednou spustit příkaz `git submodule update`:
 
 	$ git submodule update
 	remote: Counting objects: 5, done.
@@ -1011,7 +1011,7 @@ A tak to opravdu je. Ukazatel, který máte pro submodul, není to, co máte sku
 	   08d709f..6c5e70b  master     -> origin/master
 	Submodule path 'rack': checked out '6c5e70b984a60b3cecd395edd5b48a7575bf58e0'
 
-To budete muset udělat pokaždé, když stáhnete změnu v submodulu v hlavním projektu. Je to sice trochu zvláštní, ale opravdu to tak funguje.
+To budete muset udělat pokaždé, když v hlavním projektu stáhnete změny v submodulu. Je to sice trochu zvláštní, ale opravdu to tak funguje.
 
 K tradičním problémům dochází, jestliže vývojář provede lokální změnu v submodulu, ale neodešle ji na veřejný server. Poté zapíše ukazatel do tohoto neveřejného stavu a superprojekt odešle na server. Když se pak ostatní vývojáři pokusí spustit příkaz `git submodule update`, systém submodulu nemůže najít revizi, k níž se vztahuje jedna z referencí, protože existuje pouze v prvním systému vývojáře. Pokud dojde k něčemu takovému, zobrazí se následující chyba:
 
@@ -1038,7 +1038,7 @@ Dobrým způsobem, jak to v systému Git provést, je učinit ze všech podslož
 
 ### Problémy se submoduly ###
 
-Používání submodulů se však vždy neobejde bez zádrhelů. Zaprvé je třeba, abyste si v adresáři submodulu počínali opatrně. Spustíte-li příkaz `git submodule update`, provedete tím checkout konkrétní verze projektu, avšak nikoli v rámci větve. Říká se tomu oddělená hlava (detached head) – znamená to, že soubor HEAD ukazuje přímo na revizi, ne na symbolickou referenci. Problém je, že většinou nechcete pracovat v prostředí oddělené hlavy, protože byste tak velmi snadno mohli přijít o provedené změny. Jestliže nejprve spustíte příkaz `submodule update`, zapíšete v adresáři tohoto submodulu revizi, aniž byste na tuto práci vytvořili novou větev, a poté ze superprojektu znovu spustíte příkaz `git submodule update`, aniž byste mezitím zapisovali revize, Git vaše revize bez varování přepíše. Technicky vzato práci neztratíte, ale nebude žádná větev, která by na ni ukazovala, a tak bude poněkud obtížené získat práci zpět.
+Používání submodulů se však vždy neobejde bez zádrhelů. Zaprvé je třeba, abyste si v adresáři submodulu počínali opatrně. Spustíte-li příkaz `git submodule update`, provedete tím checkout konkrétní verze projektu, avšak nikoli v rámci větve. Říká se tomu oddělená hlava (detached head) – znamená to, že soubor HEAD ukazuje přímo na revizi, ne na symbolickou referenci. Problém je, že většinou nechcete pracovat v prostředí oddělené hlavy, protože byste tak velmi snadno mohli přijít o provedené změny. Jestliže nejprve spustíte příkaz `submodule update`, zapíšete v adresáři tohoto submodulu revizi, aniž byste na tuto práci vytvořili novou větev, a poté ze superprojektu znovu spustíte příkaz `git submodule update`, aniž byste mezitím zapisovali revize, Git vaše revize bez varování přepíše.  Technicky vzato práci neztratíte, ale nebude žádná větev, která by na ni ukazovala, a tak bude poněkud obtížené získat práci zpět.
 
 Aby ve vašem projektu k tomuto problému nedošlo, vytvořte během práce v adresáři submodulu příkazem `git checkout -b work` nebo podobným novou větev. Až budete podruhé provádět příkaz submodule update, i tentokrát sice vrátí vaši práci, ale přinejmenším budete mít ukazatel, k němuž se budete moci vrátit.
 
@@ -1101,7 +1101,7 @@ Až poté přepnete zpět, bude adresář `rack` prázdný. Buď můžete spusti
 
 ## Začlenění podstromu ##
 
-Nyní, když jsme poznali obtíže spojené se systémem submodulů, podívejme se na jedno alternativní řešení tohoto problému. Git se vždy při slučování nejprve podívá, co a kam začleňuje, a podle toho zvolí vhodnou strategii začlenění. Pokud slučujete dvě větve, používá Git *rekurzivní* strategii. Pokud slučujete více než dvě větve, zvolí Git tzv. strategii *chobotnice* (octopus strategy). Git vybírá tyto strategie automaticky. Rekurzivní strategie zvládá složité třícestné slučování (např. s více než jedním společným předkem), ale nedokáže sloučit více než dvě větve. Chobotnicové sloučení dokáže naproti tomu sloučit několik větví, ale je opatrnější při předcházení složitým konfliktům. Proto je ostatně nastaveno jako výchozí strategie při slučování více než dvou větví.
+Nyní, když jsme poznali obtíže spojené se systémem submodulů, podívejme se na jedno alternativní řešení tohoto problému. Git se vždy při slučování nejprve podívá, co a kam začleňuje, a podle toho zvolí vhodnou strategii začlenění. Pokud slučujete dvě větve, používá Git _rekurzivní_ strategii. Pokud slučujete více než dvě větve, zvolí Git tzv. strategii *chobotnice* (octopus strategy). Git vybírá tyto strategie automaticky, protože rekurzivní strategie zvládá složité třícestné slučování (například s více než jedním společným předkem), ale nedokáže sloučit více než dvě větve. Chobotnicové sloučení dokáže naproti tomu sloučit několik větví, ale je opatrnější s cílem předejít složitým konfliktům. Proto se vybírá jako výchozí strategie při slučování více než dvou větví.
 
 Existují však ještě další strategie. Jednou z nich je tzv. začlenění *podstromu* (subtree merge), které lze použít jako řešení problémů se subprojektem. Ukažme si, jak se dá začlenit stejný adresář rack jako v předchozí části, tentokrát však s využitím strategie začlenění podstromu.
 
